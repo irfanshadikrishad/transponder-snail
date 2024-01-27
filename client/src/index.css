@@ -89,4 +89,5 @@ input:-webkit-autofill:active {
 
 .switch_lr {
   cursor: pointer;
+  color: seagreen;
 }

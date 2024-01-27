@@ -1,4 +1,10 @@
+import { config } from "dotenv";
 import { Schema, model } from "mongoose";
+import pkg from "jsonwebtoken";
+
+config();
+const { sign } = pkg;
+const SECRET = process.env.SECRET;
 
 const userSchema = Schema(
   {
@@ -6,14 +12,22 @@ const userSchema = Schema(
     email: { type: String, required: true },
     password: { type: String, required: true },
     avatar: {
-      type: String,
-      required: true,
-      default:
-        "https://i.pinimg.com/564x/dd/1d/e6/dd1de6d91467f98928ede3a7798dbb23.jpg",
+      type: Object,
     },
   },
   { timestamps: true }
 );
+
+userSchema.methods.genJWT = function () {
+  return sign(
+    {
+      id: this._id,
+      email: this.email,
+    },
+    SECRET,
+    { expiresIn: "30d" }
+  );
+};
 
 const User = model("User", userSchema);
 
