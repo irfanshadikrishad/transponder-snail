@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../store/user";
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
 export default function Register({ loginview }) {
+    const { storeTokenInLS } = useAuth();
+    const navigate = useNavigate();
+
     const [user, setUser] = useState({
         name: '',
         email: '',
@@ -13,6 +20,19 @@ export default function Register({ loginview }) {
     const handleInput = async (e) => {
         const { name, value } = e.target;
         setUser({ ...user, [name]: value });
+    }
+
+    function errorToast(error) {
+        toast.error(error, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
     }
 
     const register = async (e) => {
@@ -39,10 +59,12 @@ export default function Register({ loginview }) {
                 })
             })
         const response = await request.json();
-        if (request.status === 200) {
-            console.log(response);
+        console.log(request.status, response);
+        if (request.status === 201) {
+            storeTokenInLS(response.token);
+            navigate('/chats');
         } else {
-            console.log(response);
+            errorToast(response.message);
         }
     }
 
@@ -91,6 +113,7 @@ export default function Register({ loginview }) {
                 onClick={() => { loginview(true) }}>
                 back to login.
             </p>
+            <ToastContainer />
         </form>
     )
 }
