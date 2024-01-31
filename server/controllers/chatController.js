@@ -58,7 +58,7 @@ const getAllChats = async (req, res) => {
       .populate("isAdmin", { password: 0 })
       .sort({ updatedAt: -1 });
 
-    chats = await User.populate(chats, {
+     chats = await User.populate(chats, {
       path: "latest.sender",
       select: "name avatar email",
     });

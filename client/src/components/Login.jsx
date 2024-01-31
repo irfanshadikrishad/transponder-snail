@@ -72,6 +72,7 @@ export default function Login({ loginview }) {
                     autoComplete="true"
                     required={true} />
                 <button
+                    type="submit"
                     className="show_password"
                     onClick={() => { setShowPassword(!showPassword) }}>
                     {showPassword ? <IoEyeOff /> : <IoEye />}

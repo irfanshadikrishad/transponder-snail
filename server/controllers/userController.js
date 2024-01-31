@@ -15,10 +15,10 @@ const allUsers = async (req, res) => {
     if (user.length > 0) {
       res.status(200).json(user);
     } else {
-      res.status(404).json({ message: "not found", search });
+      res.status(404).json({ message: "not found" });
     }
   } catch (error) {
-    console.log(chalk.magenta(`[allUsers] ${allUsers}`));
+    console.log(chalk.magenta(`[allUsers] ${error.message}`));
   }
 };
 

@@ -64,4 +64,18 @@ const login = async (req, res) => {
   }
 };
 
-export { register, login };
+const user = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.id }).select({ password: 0 });
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: "user not found" });
+    }
+  } catch (error) {
+    console.log(chalk.magenta(`[user] ${error.message}`));
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export { register, login, user };

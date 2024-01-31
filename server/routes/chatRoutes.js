@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import { Router } from "express";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import {
