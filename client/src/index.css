@@ -208,8 +208,8 @@ nav {
   position: relative;
   display: flex;
   align-items: center;
-  width: 60px;
   justify-content: space-between;
+  gap: 5px;
   padding: 5px;
   border-radius: 7px;
   background-color: var(--background);
@@ -272,6 +272,9 @@ nav {
   background-color: var(--background);
   border-radius: 7px;
   cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .chat_all {
@@ -296,4 +299,76 @@ nav {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--background);
+}
+
+.inspect_avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.profile_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 10, 10, 0.062);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.profile_modal_card {
+  position: fixed;
+  width: 500px;
+  background-color: var(--background);
+  padding: 10px;
+  border-radius: 7px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 10px #35353529;
+  z-index: 100;
+}
+
+.profile_modal_card>h1 {
+  font-size: 1.5rem;
+}
+
+.profile_modal_card>p {
+  font-size: 1rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #ffffff00 inset !important;
+}
+
+.chat_textarea {
+  background-color: var(--background);
+  height: 89vh;
+  border-radius: 7px;
+}
+
+.my_chats_avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.chat:last-child() {
+  position: relative;
+}
+
+.not_selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }

@@ -3,48 +3,46 @@ import Chat from "../models/chat.js";
 import User from "../models/user.js";
 
 const getSingleChat = async (req, res) => {
-  try {
-    const { userId } = await req.body;
-    if (!userId) {
-      res.status(400).json({ message: "Chat id not porvided." });
-    } else {
-      let isChat = await Chat.find({
-        isGroup: false,
-        $and: [
-          { users: { $elemMatch: { $eq: req.id } } },
-          { users: { $elemMatch: { $eq: userId } } },
-        ],
-      })
-        .populate("users", { password: 0 })
-        .populate("latest");
+  const { userId } = await req.body;
 
-      isChat = await User.populate(isChat, {
-        path: "latest.sender",
-        select: "name avatar email",
+  if (!userId) {
+    console.log("UserId param not sent with request");
+    return res.status(400);
+  }
+
+  var isChat = await Chat.find({
+    isGroupChat: false,
+    $and: [
+      { users: { $elemMatch: { $eq: req.id } } },
+      { users: { $elemMatch: { $eq: userId } } },
+    ],
+  })
+    .populate("users", "-password")
+    .populate("latestMessage");
+
+  isChat = await User.populate(isChat, {
+    path: "latestMessage.sender",
+    select: "name pic email",
+  });
+
+  if (isChat.length > 0) {
+    res.send(isChat[0]);
+  } else {
+    try {
+      const createdChat = await Chat.create({
+        chatName: "sender",
+        isGroupChat: false,
+        users: [req.user._id, userId],
       });
-
-      if (isChat.length > 0) {
-        res.send(isChat[0]);
-      } else {
-        const createChat = await Chat.create({
-          name: "sender", // might need to be fixed
-          isGroup: false,
-          users: [req.id, userId],
-        });
-
-        const fullChat = await Chat.findOne({ _id: createChat._id }).populate(
-          "users",
-          { password: 0 }
-        );
-
-        res.status(200).json(fullChat);
-      }
+      const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
+        "users",
+        "-password"
+      );
+      res.status(200).json(FullChat);
+    } catch (error) {
+      res.status(400);
+      throw new Error(error.message);
     }
-  } catch (error) {
-    console.log(chalk.magenta(`[getSingleChat] ${error.message}`));
-    res
-      .status(400)
-      .json({ message: "Error from getSingleChat", error: error.message });
   }
 };
 
@@ -52,16 +50,15 @@ const getAllChats = async (req, res) => {
   try {
     let chats = await Chat.find({
       users: { $elemMatch: { $eq: req.id } },
-    })
-      .populate("users", { password: 0 })
-      .populate("latest")
-      .populate("isAdmin", { password: 0 })
-      .sort({ updatedAt: -1 });
+    }).populate("users", { password: 0 });
+    // .populate("latest")
+    // .populate("isAdmin", { password: 0 })
+    // .sort({ updatedAt: -1 });
 
-     chats = await User.populate(chats, {
-      path: "latest.sender",
-      select: "name avatar email",
-    });
+    // chats = await User.populate(chats, {
+    //   path: "latest.sender",
+    //   select: "name avatar email",
+    // });
 
     res.status(200).json(chats);
   } catch (error) {

@@ -4,6 +4,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const API = 'http://localhost:3001';
+    const defaultAvatar = "https://i.pinimg.com/564x/a3/ce/d8/a3ced81768f0d838ac1dada5a85b7ac2.jpg";
     const [token, setToken] = useState(localStorage.getItem('logger'));
     const [user, setUser] = useState({});
     const [chats, setChats] = useState([]);
@@ -50,7 +51,17 @@ export const AuthProvider = ({ children }) => {
         getAllChats();
     }, [token])
     return (
-        <AuthContext.Provider value={{ storeTokenInLS, isLoggedIn, API, user, deleteTokenFromLS, token, chats }}>
+        <AuthContext.Provider value={{
+            storeTokenInLS,
+            isLoggedIn,
+            API,
+            user,
+            deleteTokenFromLS,
+            token,
+            chats,
+            defaultAvatar,
+            getAllChats
+        }}>
             {children}
         </AuthContext.Provider>
     )

@@ -4,9 +4,28 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useAuth } from "../store/user";
 
 export default function Drawer({ isdrawer }) {
-    const { API, token } = useAuth();
+    const { API, token, defaultAvatar, getAllChats } = useAuth();
     const [users, setUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+
+    const createSingleChat = async (id) => {
+        const request = await fetch(`${API}/api/chat/single`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ userId: id })
+        });
+        const response = await request.json();
+        if (request.status === 200) {
+            console.log(response);
+            isdrawer(false);
+            getAllChats();
+        } else {
+            console.log(response);
+        }
+    }
 
     const getSearchAll = async () => {
         const request = await fetch(`${API}/api/users/?search=${searchQuery}`,
@@ -50,14 +69,13 @@ export default function Drawer({ isdrawer }) {
             <div className="drawer_chats">
                 {users.map((user) => {
                     return <div
+                        onClick={() => { createSingleChat(user._id) }}
                         key={user._id}
                         className="drawer_chat"
                     >
                         <img
                             className="drawer_chat_avatar"
-                            src={user.avatar ?
-                                user.avatar :
-                                "https://i.pinimg.com/564x/a3/ce/d8/a3ced81768f0d838ac1dada5a85b7ac2.jpg"} />
+                            src={user.avatar ? user.avatar.url : defaultAvatar} />
                         <p>{user.name}</p>
                     </div>
                 })}

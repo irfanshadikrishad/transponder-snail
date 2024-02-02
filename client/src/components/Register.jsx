@@ -59,7 +59,7 @@ export default function Register({ loginview }) {
                 })
             })
         const response = await request.json();
-        console.log(request.status, response);
+
         if (request.status === 201) {
             storeTokenInLS(response.token);
             navigate('/chats');
