@@ -214,6 +214,7 @@ nav {
   border-radius: 7px;
   background-color: var(--background);
   cursor: pointer;
+  z-index: 5;
 }
 
 .navMenu {
@@ -368,7 +369,64 @@ input:-webkit-autofill:active {
 
 .not_selected {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
+  opacity: 70%;
+}
+
+.not_selected_icon {
+  font-size: 2rem;
+}
+
+.chat__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat__info {
+  font-size: 1.2rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.chat_info_background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(10, 10, 10, 0.062);
+  z-index: 5;
+}
+
+.chat_info_card {
+  width: 424px;
+  height: 165px;
+  background-color: var(--secondary);
+  border-radius: 7px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 10px #35353529;
+  text-align: center;
+}
+
+.chat_info_avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.chat_info_name {
+  font-size: 1.5rem;
 }

@@ -6,6 +6,7 @@ import NavMenu from "./NavMenu";
 // ICONS
 import { FiSearch } from "react-icons/fi";
 import { IoChevronDownOutline } from "react-icons/io5";
+import UserInfoModal from "./UserInfoModal";
 
 export default function Navbar() {
     const { user, defaultAvatar } = useAuth();
@@ -21,25 +22,7 @@ export default function Navbar() {
                 </button>
                 {isDrawerOpen && <Drawer isdrawer={setIsDrawerOpen} />}
             </div>
-            {profileModal && <section>
-                <section
-                    className="profile_modal"
-                    onClick={() => { setProfileModal(false) }}>
-                    {user
-                        &&
-                        <section
-                            className="profile_modal_card">
-                            <img
-                                className="inspect_avatar"
-                                src={user.avatar ?
-                                    user.avatar.url :
-                                    defaultAvatar}
-                                draggable="false" />
-                            <h1>{user.name}</h1>
-                            <p>{user.email}</p>
-                        </section>}
-                </section>
-            </section>}
+            {profileModal && <UserInfoModal profileModalSwitch={setProfileModal} />}
             <div
                 onClick={() => { setIsMenu(!isMenu) }}
                 className="navbar_right">

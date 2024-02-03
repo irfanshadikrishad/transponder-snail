@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/user.jsx';
 import Navbar from "../components/Navbar.jsx";
+import ChatInfoModal from "../components/ChatInfoModal.jsx";
 // TOASTIFY
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // ICONS
 import { MdOutlineAdd } from "react-icons/md";
+import NotSelectedChat from "../components/NotSelectedChat.jsx";
+import SelectedChat from "../components/SelectedChat.jsx";
 
 export default function Chats() {
     const navigate = useNavigate();
     const { isLoggedIn, chats, defaultAvatar, user, API, token } = useAuth();
     const [selectedChat, setSelectedChat] = useState(null);
+    const [isChatInfoOpen, setIsChatInfoOpen] = useState(false);
 
     function errorToast(error) {
         toast.error(error, {
@@ -51,12 +55,6 @@ export default function Chats() {
                                 key={chat._id}
                                 onClick={() => { getSelectedChat(chat) }}
                                 className="chat_tab">
-                                {/* {(!chat.isGroup && chat.users) && < img
-                                    className="my_chats_avatar"
-                                    src={(chat.users[0]._id !== user._id ?
-                                        (chat.users[0].avatar ? chat.users[0].avatar : defaultAvatar) :
-                                        (chat.users[1].avatar ? chat.users[1].avatar : defaultAvatar))
-                                    } />} */}
                                 <p>
                                     {(!chat.isGroup && chat.users[1]) ?
                                         (chat.users[1]._id !== user._id ?
@@ -67,17 +65,16 @@ export default function Chats() {
                         })}
                     </div>
                 </section>
+                {isChatInfoOpen && <ChatInfoModal
+                    chatClose={setIsChatInfoOpen}
+                    selectedChat={selectedChat} />}
                 <section className="chat">
-                    {selectedChat ? <div>
-                        <h1>{(!selectedChat.isGroup && selectedChat.users[1]) ?
-                            (selectedChat.users[1]._id !== user._id ?
-                                selectedChat.users[1].name :
-                                selectedChat.users[0].name) : selectedChat.name}</h1>
-                        <section className="chat_textarea">
-                        </section>
-                    </div> : <div className="not_selected">
-                        <p>Select chat to interect.</p>
-                    </div>}
+                    {
+                        selectedChat ? <SelectedChat
+                            selectedChat={selectedChat}
+                            setIsChatInfoOpen={setIsChatInfoOpen} /> :
+                            <NotSelectedChat />
+                    }
                 </section>
             </section>
             <ToastContainer />
