@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useAuth } from "../store/user";
+// ICONS
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
-import { useAuth } from "../store/user";
 
 export default function Drawer({ isdrawer }) {
     const { API, token, defaultAvatar, getAllChats } = useAuth();
@@ -19,7 +20,6 @@ export default function Drawer({ isdrawer }) {
         });
         const response = await request.json();
         if (request.status === 200) {
-            console.log(response);
             isdrawer(false);
             getAllChats();
         } else {

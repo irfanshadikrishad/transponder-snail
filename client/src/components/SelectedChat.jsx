@@ -7,13 +7,13 @@ export default function SelectedChat({ selectedChat, setIsChatInfoOpen }) {
     return (
         <div>
             <section className="chat__header">
-                <h1>{
+                <p>{
                     (!selectedChat.isGroup && selectedChat.users[1]) ?
                         (selectedChat.users[1]._id !== user._id ?
                             selectedChat.users[1].name :
                             selectedChat.users[0].name) : selectedChat.name
                 }
-                </h1>
+                </p>
                 <button
                     onClick={() => { setIsChatInfoOpen(true) }}
                     className="chat__info">

@@ -65,13 +65,13 @@ const getAllChats = async (req, res) => {
     console.log(chalk.magenta(`[getAllChats] ${error.message}`));
     res
       .status(400)
-      .json({ message: "Error from getAllChats", error: error.message });
+      .json({ message: "Error getting chats.", error: error.message });
   }
 };
 
 const createGroupChat = async (req, res) => {
   try {
-    let users = await JSON.parse(req.body.users);
+    let users = await req.body.users;
     if (users.length < 2) {
       res.status(400).json({ message: "Requires more than 2 users." });
     } else {
@@ -90,10 +90,10 @@ const createGroupChat = async (req, res) => {
       res.status(201).json(fullGroupChat);
     }
   } catch (error) {
-    console.log(chalk.magenta(`[createGroupChat] ${error.message}`));
+    console.log(chalk.magenta(`[createGroupChat] ${error}`));
     res
       .status(400)
-      .json({ message: "Error from createGroupChat", error: error.message });
+      .json({ message: "Error creating group chat.", error: error.message });
   }
 };
 
@@ -113,7 +113,7 @@ const renameGroup = async (req, res) => {
     console.log(chalk.magenta(`[renameGroup] ${error.message}`));
     res
       .status(400)
-      .json({ message: "Error from renameGroup", error: error.message });
+      .json({ message: "Error renaming group.", error: error.message });
   }
 };
 
@@ -135,7 +135,7 @@ const addToGroup = async (req, res) => {
     console.log(chalk.magenta(`[addToGroup] ${error.message}`));
     res
       .status(400)
-      .json({ message: "Error from addToGroup", error: error.message });
+      .json({ message: "Error adding to the group.", error: error.message });
   }
 };
 
@@ -157,7 +157,7 @@ const removeFromGroup = async (req, res) => {
     console.log(chalk.magenta(`[removeFromGroup] ${error.message}`));
     res
       .status(400)
-      .json({ message: "Error from removeFromGroup", error: error.message });
+      .json({ message: "Error removing from group.", error: error.message });
   }
 };
 

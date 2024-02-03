@@ -387,6 +387,7 @@ input:-webkit-autofill:active {
 }
 
 .chat__info {
+  display: flex;
   font-size: 1.2rem;
   border: none;
   background-color: transparent;
@@ -429,4 +430,102 @@ input:-webkit-autofill:active {
 
 .chat_info_name {
   font-size: 1.5rem;
+}
+
+.create_group_modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(10, 10, 10, 0.062);
+  z-index: 10;
+}
+
+.create_group_inside {
+  width: 450px;
+  background-color: var(--background);
+  padding: 10px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  z-index: 15;
+}
+
+.create_group_searched {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.create_group_user_avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.create_group_user_search {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  border-radius: 7px;
+  background-color: var(--background);
+  cursor: pointer;
+}
+
+.create_group_buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.create_group_user_text {
+  line-height: 25px;
+}
+
+.create_group_inside>input {
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.create_group_buttons>button {
+  border: none;
+  font-size: 1rem;
+  color: var(--secondary);
+  background-color: var(--color);
+  padding: 8px 25px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.added_users {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.addedUser {
+  background-color: rgb(229, 231, 231);
+  padding: 0 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.addedUser>button {
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
 }
