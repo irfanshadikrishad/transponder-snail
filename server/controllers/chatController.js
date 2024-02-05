@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import Chat from "../models/chat.js";
 import User from "../models/user.js";
 
@@ -50,19 +49,19 @@ const getAllChats = async (req, res) => {
   try {
     let chats = await Chat.find({
       users: { $elemMatch: { $eq: req.id } },
-    }).populate("users", { password: 0 });
-    // .populate("latest")
-    // .populate("isAdmin", { password: 0 })
-    // .sort({ updatedAt: -1 });
+    })
+      .populate("users", { password: 0 })
+      .populate("latest")
+      .populate("isAdmin", { password: 0 })
+      .sort({ updatedAt: -1 });
 
-    // chats = await User.populate(chats, {
-    //   path: "latest.sender",
-    //   select: "name avatar email",
-    // });
+    chats = await User.populate(chats, {
+      path: "latest.sender",
+      select: "name avatar email",
+    });
 
     res.status(200).json(chats);
   } catch (error) {
-    console.log(chalk.magenta(`[getAllChats] ${error.message}`));
     res
       .status(400)
       .json({ message: "Error getting chats.", error: error.message });
@@ -90,7 +89,6 @@ const createGroupChat = async (req, res) => {
       res.status(201).json(fullGroupChat);
     }
   } catch (error) {
-    console.log(chalk.magenta(`[createGroupChat] ${error}`));
     res
       .status(400)
       .json({ message: "Error creating group chat.", error: error.message });
@@ -110,7 +108,6 @@ const renameGroup = async (req, res) => {
 
     res.status(200).json(updatedChat);
   } catch (error) {
-    console.log(chalk.magenta(`[renameGroup] ${error.message}`));
     res
       .status(400)
       .json({ message: "Error renaming group.", error: error.message });
@@ -132,7 +129,6 @@ const addToGroup = async (req, res) => {
 
     res.status(200).json(updatedChat);
   } catch (error) {
-    console.log(chalk.magenta(`[addToGroup] ${error.message}`));
     res
       .status(400)
       .json({ message: "Error adding to the group.", error: error.message });
@@ -154,7 +150,6 @@ const removeFromGroup = async (req, res) => {
 
     res.status(200).json(updatedChat);
   } catch (error) {
-    console.log(chalk.magenta(`[removeFromGroup] ${error.message}`));
     res
       .status(400)
       .json({ message: "Error removing from group.", error: error.message });
