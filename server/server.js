@@ -6,6 +6,7 @@ import database from "./utils/database.js";
 import authRouter from "./routes/authRouter.js";
 import userRouter from "./routes/userRouter.js";
 import chatRouter from "./routes/chatRoutes.js";
+import messageRouter from "./routes/messageRouter.js";
 
 config();
 database();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/chat", chatRouter);
+app.use("/api/message", messageRouter);
 
 app.listen(PORT, () => {
   console.log(chalk.cyan(`[listen] ${PORT}`));
