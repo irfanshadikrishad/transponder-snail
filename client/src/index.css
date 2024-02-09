@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
 
 :root {
   --color: #353535;
@@ -15,7 +15,7 @@
 body {
   color: var(--color);
   background-color: var(--background);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 input:-webkit-autofill,
@@ -84,7 +84,7 @@ input:-webkit-autofill:active {
   cursor: pointer;
 }
 
-.form_password>input[type="password"] {
+.form_password > input[type="password"] {
   width: 100%;
 }
 
@@ -126,7 +126,7 @@ nav {
   align-items: center;
 }
 
-.search_drawer_i>input {
+.search_drawer_i > input {
   font-size: 1rem;
   border: none;
   background-color: transparent;
@@ -135,7 +135,7 @@ nav {
   padding: 10px;
 }
 
-.search_drawer_i>button {
+.search_drawer_i > button {
   display: flex;
   font-size: 1rem;
   border: none;
@@ -181,7 +181,7 @@ nav {
   cursor: pointer;
 }
 
-.search_container>input {
+.search_container > input {
   outline: none;
   border: none;
   background-color: transparent;
@@ -189,7 +189,7 @@ nav {
   padding: 5px;
 }
 
-.search_container>button {
+.search_container > button {
   display: flex;
   font-size: 1.03rem;
   border: none;
@@ -231,7 +231,7 @@ nav {
   border-radius: 7px;
 }
 
-.navMenu>button {
+.navMenu > button {
   border: none;
   font-size: 1rem;
   cursor: pointer;
@@ -258,7 +258,7 @@ nav {
   justify-content: space-between;
 }
 
-.chat1_header>button {
+.chat1_header > button {
   font-size: 1rem;
   border: none;
   background-color: var(--background);
@@ -337,11 +337,11 @@ nav {
   z-index: 100;
 }
 
-.profile_modal_card>h1 {
+.profile_modal_card > h1 {
   font-size: 1.5rem;
 }
 
-.profile_modal_card>p {
+.profile_modal_card > p {
   font-size: 1rem;
 }
 
@@ -350,12 +350,6 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px #ffffff00 inset !important;
-}
-
-.chat_textarea {
-  background-color: var(--background);
-  height: 89vh;
-  border-radius: 7px;
 }
 
 .my_chats_avatar {
@@ -491,7 +485,7 @@ input:-webkit-autofill:active {
   line-height: 25px;
 }
 
-.create_group_inside>input {
+.create_group_inside > input {
   font-size: 1rem;
   border: none;
   outline: none;
@@ -499,7 +493,7 @@ input:-webkit-autofill:active {
   border-radius: 7px;
 }
 
-.create_group_buttons>button {
+.create_group_buttons > button {
   border: none;
   font-size: 1rem;
   color: var(--secondary);
@@ -524,7 +518,7 @@ input:-webkit-autofill:active {
   gap: 5px;
 }
 
-.addedUser>button {
+.addedUser > button {
   border: none;
   background-color: transparent;
   font-size: 1rem;
@@ -548,7 +542,7 @@ input:-webkit-autofill:active {
   border-radius: 5px;
 }
 
-.group_member>button {
+.group_member > button {
   display: flex;
   border: none;
   background-color: transparent;
@@ -556,7 +550,7 @@ input:-webkit-autofill:active {
   cursor: pointer;
 }
 
-.selectedGroup>h1 {
+.selectedGroup > h1 {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
@@ -565,7 +559,7 @@ input:-webkit-autofill:active {
   text-align: left;
 }
 
-.selectedGroup>input {
+.selectedGroup > input {
   font-size: 1rem;
   border: none;
   outline: none;
@@ -574,4 +568,58 @@ input:-webkit-autofill:active {
   background-color: #e5e5e5;
   margin: 5px 0;
   width: 100%;
+}
+
+.chat_textarea {
+  background-color: var(--background);
+  height: 89vh;
+  border-radius: 7px;
+  position: relative;
+}
+
+#send_message {
+  position: absolute;
+  bottom: 0;
+  width: 98%;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 7px;
+}
+
+.chat_avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.chat_i {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.chat_textarea > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  width: 98.8%;
+}
+.chat_back {
+  color: var(--secondary);
+  padding: 0 5px;
+  border-radius: 5px;
+}
+.chat_self {
+  background-color: rgb(11, 116, 11);
+}
+.chat_notself {
+  background-color: rgb(6, 121, 167);
+}
+.sent {
+  align-self: flex-end;
 }

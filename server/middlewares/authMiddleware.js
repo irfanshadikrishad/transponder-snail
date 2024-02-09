@@ -22,7 +22,7 @@ const authMiddleware = async (req, res, next) => {
       req.id = user._id.toString();
       req.token = token;
 
-      console.log(chalk.cyan(`[authMiddleware] ✅`));
+      console.log(chalk.cyan(`[authMiddleware] ✅ ${req.user.name}`));
       next();
     }
   } catch (error) {
