@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [chats, setChats] = useState([]);
   const isLoggedIn = !!token;
+  const [selectedChat, setSelectedChat] = useState({});
 
   const storeTokenInLS = (token) => {
     setToken(token);
@@ -97,6 +98,8 @@ export const AuthProvider = ({ children }) => {
         getAllChats,
         successToast,
         errorToast,
+        selectedChat,
+        setSelectedChat,
       }}
     >
       {children}

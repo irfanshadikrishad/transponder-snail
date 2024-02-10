@@ -16,7 +16,8 @@
     "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.21.3",
     "react-scrollable-feed": "^2.0.1",
-    "react-toastify": "^10.0.4"
+    "react-toastify": "^10.0.4",
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

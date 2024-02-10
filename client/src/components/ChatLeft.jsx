@@ -2,13 +2,17 @@ import { useState } from "react";
 import { useAuth } from "../store/user";
 import { MdOutlineAdd } from "react-icons/md";
 import CreateGroupModal from "./CreateGroupModal";
+import io from "socket.io-client";
 
-export default function ChatLeft({ setSelectedChat }) {
+export default function ChatLeft() {
+  const { API, setSelectedChat } = useAuth();
+  let socket = io(API);
   const { user, chats } = useAuth();
   const [isGroupModalActive, setIsGroupModalActive] = useState(false);
 
   const getSelectedChat = async (chat) => {
     setSelectedChat(chat);
+    socket.emit("join_chat", chat);
   };
 
   return (

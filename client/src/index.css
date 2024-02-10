@@ -580,7 +580,7 @@ input:-webkit-autofill:active {
 #send_message {
   position: absolute;
   bottom: 0;
-  width: 98%;
+  width: -webkit-fill-available;
   font-size: 1rem;
   border: none;
   outline: none;
@@ -607,7 +607,8 @@ input:-webkit-autofill:active {
   flex-direction: column;
   gap: 10px;
   padding: 10px;
-  width: 98.8%;
+  width: auto;
+  height: 90% !important;
 }
 .chat_back {
   color: var(--secondary);

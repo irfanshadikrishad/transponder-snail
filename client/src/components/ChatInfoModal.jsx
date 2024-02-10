@@ -5,8 +5,8 @@ import { useAuth } from "../store/user";
 import IsGroup from "./IsGroup";
 import NotGroup from "./NotGroup";
 
-export default function ChatInfoModal({ chatClose, selectedChat }) {
-  const { user, defaultAvatar } = useAuth();
+export default function ChatInfoModal({ chatClose }) {
+  const { user, defaultAvatar, selectedChat } = useAuth();
   const [reciver, setReciver] = useState({});
   const [isAdmin, setIsAdmin] = useState(false);
 

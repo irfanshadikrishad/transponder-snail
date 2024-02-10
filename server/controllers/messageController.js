@@ -13,7 +13,7 @@ const sendMessage = async (req, res) => {
         content,
         chat: chatId,
       });
-      console.log(message);
+
       message = await message.populate("sender", "name avatar");
       message = await message.populate("chat");
       message = await User.populate(message, {
