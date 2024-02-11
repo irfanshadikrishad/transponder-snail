@@ -50,10 +50,13 @@ io.on("connection", (socket) => {
     } else {
       chat.users.forEach((user) => {
         if (!(user._id == message.sender._id)) {
-          console.log("backend ran for message recived");
           socket.to(user._id).emit("message_recived", message);
         }
       });
     }
+    socket.off("setup", () => {
+      console.log("User Disconnected");
+      socket.leave(user._id);
+    });
   });
 });

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import ScrollableFeed from "react-scrollable-feed";
 import io from "socket.io-client";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 export default function SelectedChat({ setIsChatInfoOpen }) {
   const { user, API, token, errorToast, defaultAvatar, selectedChat } =
@@ -79,28 +81,22 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
   };
 
   useEffect(() => {
-    console.log("useEffect running");
-    console.log("Socket:", socket);
-    console.log("socket status", socket);
     if (socket && socket.connected) {
-      console.log("Socket is connected");
       socket.on("message_recived", (message) => {
-        console.log("Message received:", message);
         if (
           !selectedChatToBeCompared ||
           selectedChatToBeCompared._id !== message.chat._id
         ) {
-          console.log("Notification: New message received", message);
+          // console.log("Notification: New message received", message.content);
           // Add your notification logic here
         } else {
-          console.log("Adding message to allMessages:", message);
-          setAllMessages((prevMessages) => [...prevMessages, message]);
+          getAllMessages();
         }
       });
     } else {
-      console.log("Socket is not connected");
+      console.log("Socket is not connected", socket);
     }
-  }, [socket, selectedChatToBeCompared]);
+  });
 
   return (
     <div>
@@ -146,8 +142,15 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                 >
                   {message.sender._id !== user._id && (
                     <img
+                      data-tooltip-id="tooltip"
+                      data-tooltip-content={message.sender.name}
+                      data-tooltip-place="top-start"
                       className="chat_avatar"
-                      src={message.avatar ? message.avatar.url : defaultAvatar}
+                      src={
+                        message.sender.avatar.url
+                          ? message.sender.avatar.url
+                          : defaultAvatar
+                      }
                       alt={`${message.name}'s avatar`}
                       draggable="false"
                     />
@@ -177,6 +180,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
         </form>
       </section>
       <ToastContainer />
+      <Tooltip id="tooltip" />
     </div>
   );
 }

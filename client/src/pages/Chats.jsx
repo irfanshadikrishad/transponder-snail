@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Chats() {
   const navigate = useNavigate();
-  const { isLoggedIn, chats, selectedChat, setSelectedChat } = useAuth();
+  const { isLoggedIn, chats, selectedChat } = useAuth();
   const [isChatInfoOpen, setIsChatInfoOpen] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function Chats() {
       <section className="chats">
         <ChatLeft />
         <section className="chat">
-          {selectedChat ? (
+          {selectedChat._id ? (
             <SelectedChat setIsChatInfoOpen={setIsChatInfoOpen} />
           ) : (
             <NotSelectedChat />

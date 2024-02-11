@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../store/user";
 
 export default function isGroup({ selectedChat, isAdmin }) {
-  const { API, token } = useAuth();
+  const { API, token, defaultAvatar } = useAuth();
   const { name, users } = selectedChat;
   const [modifiedUsers, setModifiedUsers] = useState(users);
   const [searchResults, setSearchResults] = useState([]);

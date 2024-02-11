@@ -11,7 +11,7 @@ export default function ChatInfoModal({ chatClose }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   const isAdminChecker = async () => {
-    if (selectedChat.isAdmin._id === user._id) {
+    if (selectedChat.isAdmin && selectedChat.isAdmin._id === user._id) {
       setIsAdmin(true);
     } else {
       setIsAdmin(false);

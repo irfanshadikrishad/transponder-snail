@@ -117,6 +117,7 @@ nav {
   top: 0;
   left: 0;
   padding: 10px;
+  z-index: 2;
 }
 
 .search_drawer_i {
@@ -249,7 +250,13 @@ nav {
   background-color: var(--secondary);
   border-radius: 7px;
   margin-top: 5px;
-  height: 91vh;
+  height: 90.6vh;
+}
+.chat_textarea {
+  background-color: var(--background);
+  height: 88.2vh;
+  border-radius: 7px;
+  position: relative;
 }
 
 .chat1_header {
@@ -570,13 +577,6 @@ input:-webkit-autofill:active {
   width: 100%;
 }
 
-.chat_textarea {
-  background-color: var(--background);
-  height: 89vh;
-  border-radius: 7px;
-  position: relative;
-}
-
 #send_message {
   position: absolute;
   bottom: 0;
@@ -623,4 +623,10 @@ input:-webkit-autofill:active {
 }
 .sent {
   align-self: flex-end;
+}
+
+@media screen and (max-width: 980px) {
+  .chats {
+    grid-template-columns: 1.5fr 4fr;
+  }
 }
