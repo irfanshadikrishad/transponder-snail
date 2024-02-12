@@ -13,16 +13,17 @@ import { Server } from "socket.io";
 config();
 database();
 const PORT = process.env.PORT || 3001;
+const Client = "https://transponder-snail.vercel.app";
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: Client,
     methods: "*",
   },
 });
 
-app.use(cors({ origin: "http://localhost:5173", methods: "*" }));
+app.use(cors({ origin: Client, methods: "*" }));
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
