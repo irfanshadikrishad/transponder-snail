@@ -43,6 +43,22 @@ io.on("connection", (socket) => {
     socket.join(room);
     console.log("joinded", room._id);
   });
+  socket.on("typing", (room, user) => {
+    console.log(`${user.name} is typing`);
+    room.users.map((sendTo) => {
+      if (sendTo._id !== user._id) {
+        socket.to(sendTo._id).emit("typing", user);
+      }
+    });
+  });
+  socket.on("stop_typing", (room, user) => {
+    console.log(`${user.name} stopped typing`);
+    room.users.map((sendTo) => {
+      if (sendTo._id !== user._id) {
+        socket.to(sendTo._id).emit("stop_typing", user);
+      }
+    });
+  });
   socket.on("send_message", (message) => {
     let chat = message.chat;
     if (!chat.users) {

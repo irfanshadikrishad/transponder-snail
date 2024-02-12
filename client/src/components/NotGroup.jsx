@@ -7,6 +7,7 @@ export default function NotGroup({ reciver, defaultAvatar }) {
         src={reciver.avatar ? reciver.avatar.url : defaultAvatar}
       />
       <h1 className="chat_info_name">{reciver.name}</h1>
+      <p>{reciver.email}</p>
     </div>
   );
 }

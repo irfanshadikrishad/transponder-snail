@@ -282,8 +282,17 @@ nav {
   border-radius: 7px;
   cursor: pointer;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  line-height: 20px;
+}
+.opponents {
+  font-weight: 600;
+}
+
+.opponents_lastMessage {
+  font-size: 0.9rem;
+  line-height: 15px;
 }
 
 .chat_all {
@@ -623,6 +632,12 @@ input:-webkit-autofill:active {
 }
 .sent {
   align-self: flex-end;
+}
+
+.typing {
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
 }
 
 @media screen and (max-width: 980px) {

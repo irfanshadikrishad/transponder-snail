@@ -100,6 +100,7 @@ export const AuthProvider = ({ children }) => {
         errorToast,
         selectedChat,
         setSelectedChat,
+        getAllChats,
       }}
     >
       {children}

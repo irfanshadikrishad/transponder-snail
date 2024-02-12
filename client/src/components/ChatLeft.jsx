@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../store/user";
 import { MdOutlineAdd } from "react-icons/md";
 import CreateGroupModal from "./CreateGroupModal";
 import io from "socket.io-client";
 
 export default function ChatLeft() {
-  const { API, setSelectedChat } = useAuth();
+  const { API, setSelectedChat, user, chats } = useAuth();
   let socket = io(API);
-  const { user, chats } = useAuth();
   const [isGroupModalActive, setIsGroupModalActive] = useState(false);
 
   const getSelectedChat = async (chat) => {
@@ -30,6 +29,7 @@ export default function ChatLeft() {
       <div className="chat_all">
         {chats &&
           chats.map((chat) => {
+            console.log(chat);
             return (
               <div
                 key={chat._id}
@@ -38,13 +38,22 @@ export default function ChatLeft() {
                 }}
                 className="chat_tab"
               >
-                <p>
+                <p className="opponents">
                   {!chat.isGroup && chat.users[1]
                     ? chat.users[1]._id !== user._id
                       ? chat.users[1].name
                       : chat.users[0].name
                     : chat.name}
                 </p>
+                {chat.latest && (
+                  <p className="opponents_lastMessage">
+                    {chat.latest.sender._id === user._id
+                      ? `You: `
+                      : chat.isGroup && `${chat.latest.sender.name}: `}
+                    {chat.latest.content &&
+                      `${String(chat.latest.content).slice(0, 20)}...`}
+                  </p>
+                )}
               </div>
             );
           })}

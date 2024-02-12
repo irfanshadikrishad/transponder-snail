@@ -8,14 +8,23 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 export default function SelectedChat({ setIsChatInfoOpen }) {
-  const { user, API, token, errorToast, defaultAvatar, selectedChat } =
-    useAuth();
+  const {
+    user,
+    API,
+    token,
+    errorToast,
+    defaultAvatar,
+    selectedChat,
+    getAllChats,
+  } = useAuth();
   const [content, setContent] = useState("");
   const [allMessages, setAllMessages] = useState([]);
   const [isSocketConntected, setIsSocketConnected] = useState(false);
   const [socket, setSocket] = useState(null); // Initialize socket state
   const [selectedChatToBeCompared, setSelectedChatToBeCompared] =
     useState(null);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     getAllMessages();
@@ -25,13 +34,8 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
       newSocket.on("connect", () => {
         setIsSocketConnected(true);
       });
-
-      setSocket(newSocket); // Set the socket
-
+      setSocket(newSocket);
       setSelectedChatToBeCompared(selectedChat);
-      // return () => {
-      //   newSocket.disconnect(); // Clean up socket on component unmount
-      // };
     }
   }, [selectedChat, API, user]);
 
@@ -59,6 +63,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
 
   const sendMessage = async (e) => {
     e.preventDefault();
+    socket.emit("stop_typing", selectedChat, user);
     if (content && isSocketConntected) {
       const request = await fetch(`${API}/api/message/send`, {
         method: "POST",
@@ -73,6 +78,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
         setContent("");
         socket.emit("send_message", response);
         setAllMessages([...allMessages, response]);
+        getAllChats();
       } else {
         console.log(response);
         errorToast(response.error);
@@ -80,17 +86,46 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
     }
   };
 
+  const typingHandler = (e) => {
+    setContent(e.target.value);
+
+    if (!isSocketConntected) return;
+
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat, user);
+    }
+    let lastTypingTime = new Date().getTime();
+    var timerLength = 3000;
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop_typing", selectedChat, user);
+        setTyping(false);
+      }
+    }, timerLength);
+  };
+
   useEffect(() => {
-    if (socket && socket.connected) {
+    if (socket) {
+      socket.on("typing", (sendTo) => {
+        console.log("typing", sendTo.name);
+        setIsTyping(sendTo);
+      });
+      socket.on("stop_typing", (sendTo) => {
+        setIsTyping(false);
+        console.log("stop_typing", sendTo.name);
+      });
       socket.on("message_recived", (message) => {
         if (
           !selectedChatToBeCompared ||
           selectedChatToBeCompared._id !== message.chat._id
         ) {
-          // console.log("Notification: New message received", message.content);
-          // Add your notification logic here
+          console.log("notification", message);
         } else {
           getAllMessages();
+          getAllChats();
         }
       });
     } else {
@@ -102,7 +137,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
     <div>
       <section className="chat__header">
         {selectedChat && (
-          <p>
+          <div>
             <p>
               {selectedChat && selectedChat.isGroup
                 ? selectedChat.name
@@ -118,7 +153,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                   selectedChat.users.length > 0 &&
                   selectedChat.users[0].name}
             </p>
-          </p>
+          </div>
         )}
         <button
           onClick={() => {
@@ -169,13 +204,13 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
             })}
         </ScrollableFeed>
         <form onSubmit={sendMessage}>
+          {isTyping && <p className="typing">{isTyping.name} is typing...</p>}
           <input
             value={content}
-            onChange={(e) => {
-              setContent(e.target.value);
-            }}
+            onChange={typingHandler}
             id="send_message"
             placeholder="send message..."
+            autoComplete="off"
           />
         </form>
       </section>
