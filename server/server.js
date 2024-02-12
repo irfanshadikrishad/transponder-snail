@@ -30,6 +30,10 @@ app.use("/api/users", userRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/message", messageRouter);
 
+app.get("/", async (req, res) => {
+  res.status(200).json({ status: 200 });
+});
+
 server.listen(PORT, () => {
   console.log(chalk.cyan(`[listen] ${PORT}`));
 });
