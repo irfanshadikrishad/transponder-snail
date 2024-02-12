@@ -5,35 +5,56 @@ Open Source MERN Stack chat app. The name transponder-snail is inspired by 'One 
 <h4>How to run locally?</h4>
 
 To run locally in your own device first clone the repository:
+
 ```ada
 git clone https://github.com/irfanshadikrishad/transponder-snail.git
 ```
+
 Change the directory:
+
 ```ada
 cd transponder-snail
 ```
+
 there are two main directories for server and client, you will need to install the packages in each directory.
+
 ```ada
 cd client
 npm install
-cd .../server
+cd ../server
 npm install
 ```
+
 To run front-end in react:
+
 ```ada
 npm run dev
 ```
+
 then go to [localhost](http://localhost:5173) where its running.
 
 To run server go to server directory and run:
+
 ```ada
 node server.js
 ```
-or 
+
+or
+
 ```ada
 nodemon server.js
 ```
+
 if nodemon installed locally.
+
+<h4>Environment Variables:</h4>
+
+```
+PORT=
+URI=
+SALT=
+SECRET=
+```
 
 <h4>Stacks:</h4>
 
