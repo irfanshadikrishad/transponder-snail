@@ -666,8 +666,9 @@ input:-webkit-autofill:active {
 }
 @media screen and (max-width: 600px) {
   .chat_info_card,
-  .profile_modal_card {
-    width: 300px;
+  .profile_modal_card,
+  .create_group_inside {
+    width: 280px;
   }
   .chats {
     margin-top: 0;

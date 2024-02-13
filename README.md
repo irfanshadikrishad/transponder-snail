@@ -12,6 +12,7 @@ Open Source MERN Stack chat app. The name transponder-snail is inspired by 'One 
 - Protected routes.
 - Last message on chat drawer.
 - Search users to chat.
+- Responsive/Mobile Friendly.
 - ...
 
 <h4>How to run locally?</h4>
