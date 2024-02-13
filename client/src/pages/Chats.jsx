@@ -35,8 +35,12 @@ export default function Chats() {
     <section>
       <Navbar />
       <section className="chats">
-        {isMobile && !selectedChat._id && <ChatLeft />}
-        {isMobile && selectedChat._id && (
+        {isMobile && !selectedChat._id ? (
+          <ChatLeft />
+        ) : (
+          !isMobile && <ChatLeft />
+        )}
+        {isMobile && selectedChat._id ? (
           <section className="chat">
             {selectedChat._id ? (
               <SelectedChat setIsChatInfoOpen={setIsChatInfoOpen} />
@@ -45,6 +49,19 @@ export default function Chats() {
             )}
             {isChatInfoOpen && <ChatInfoModal chatClose={setIsChatInfoOpen} />}
           </section>
+        ) : (
+          !isMobile && (
+            <section className="chat">
+              {selectedChat._id ? (
+                <SelectedChat setIsChatInfoOpen={setIsChatInfoOpen} />
+              ) : (
+                <NotSelectedChat />
+              )}
+              {isChatInfoOpen && (
+                <ChatInfoModal chatClose={setIsChatInfoOpen} />
+              )}
+            </section>
+          )
         )}
       </section>
       <ToastContainer />

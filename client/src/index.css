@@ -117,7 +117,7 @@ nav {
   top: 0;
   left: 0;
   padding: 10px;
-  z-index: 2;
+  z-index: 15;
 }
 
 .search_drawer_i {
@@ -661,13 +661,10 @@ input:-webkit-autofill:active {
 
 @media screen and (max-width: 980px) {
   .chats {
-    grid-template-columns: 1.5fr 4fr;
+    grid-template-columns: 1fr;
   }
 }
 @media screen and (max-width: 600px) {
-  .chats {
-    grid-template-columns: 1fr;
-  }
   .chat_info_card,
   .profile_modal_card {
     width: 300px;
