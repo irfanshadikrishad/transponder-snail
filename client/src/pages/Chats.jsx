@@ -14,25 +14,38 @@ export default function Chats() {
   const navigate = useNavigate();
   const { isLoggedIn, chats, selectedChat } = useAuth();
   const [isChatInfoOpen, setIsChatInfoOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/");
     }
+
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", checkScreenSize);
+
+    checkScreenSize();
+
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, [chats]);
   return (
     <section>
       <Navbar />
       <section className="chats">
-        <ChatLeft />
-        <section className="chat">
-          {selectedChat._id ? (
-            <SelectedChat setIsChatInfoOpen={setIsChatInfoOpen} />
-          ) : (
-            <NotSelectedChat />
-          )}
-          {isChatInfoOpen && <ChatInfoModal chatClose={setIsChatInfoOpen} />}
-        </section>
+        {isMobile && !selectedChat._id && <ChatLeft />}
+        {isMobile && selectedChat._id && (
+          <section className="chat">
+            {selectedChat._id ? (
+              <SelectedChat setIsChatInfoOpen={setIsChatInfoOpen} />
+            ) : (
+              <NotSelectedChat />
+            )}
+            {isChatInfoOpen && <ChatInfoModal chatClose={setIsChatInfoOpen} />}
+          </section>
+        )}
       </section>
       <ToastContainer />
     </section>

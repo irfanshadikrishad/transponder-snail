@@ -655,9 +655,24 @@ input:-webkit-autofill:active {
   bottom: 50px;
   left: 10px;
 }
+.hide {
+  display: none !important;
+}
 
 @media screen and (max-width: 980px) {
   .chats {
     grid-template-columns: 1.5fr 4fr;
+  }
+}
+@media screen and (max-width: 600px) {
+  .chats {
+    grid-template-columns: 1fr;
+  }
+  .chat_info_card,
+  .profile_modal_card {
+    width: 300px;
+  }
+  .chats {
+    margin-top: 0;
   }
 }
