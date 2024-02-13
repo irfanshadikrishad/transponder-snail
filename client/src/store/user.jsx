@@ -5,7 +5,8 @@ import "react-toastify/dist/ReactToastify.css";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const API = "https://transponder-snail.onrender.com";
+  // "https://transponder-snail.onrender.com"
+  const API = "http://localhost:3001";
   const defaultAvatar =
     "https://i.pinimg.com/564x/a3/ce/d8/a3ced81768f0d838ac1dada5a85b7ac2.jpg";
   const [token, setToken] = useState(localStorage.getItem("logger"));
@@ -100,7 +101,6 @@ export const AuthProvider = ({ children }) => {
         errorToast,
         selectedChat,
         setSelectedChat,
-        getAllChats,
       }}
     >
       {children}

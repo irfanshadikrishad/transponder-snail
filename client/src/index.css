@@ -243,14 +243,14 @@ nav {
   display: grid;
   grid-template-columns: 1fr 4fr;
   gap: 5px;
+  margin-top: 5px;
 }
 
 .chat {
   padding: 10px;
   background-color: var(--secondary);
   border-radius: 7px;
-  margin-top: 5px;
-  height: 90.6vh;
+  height: 90.5vh;
 }
 .chat_textarea {
   background-color: var(--background);
@@ -275,6 +275,17 @@ nav {
   display: flex;
   align-items: center;
 }
+.chat_header_left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chat_header_left > button {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
 .chat_tab {
   padding: 10px;
@@ -287,10 +298,13 @@ nav {
   line-height: 20px;
 }
 .opponents {
+  color: var(--color);
   font-weight: 600;
 }
 
 .opponents_lastMessage {
+  color: var(--color);
+  opacity: 90%;
   font-size: 0.9rem;
   line-height: 15px;
 }
@@ -395,12 +409,14 @@ input:-webkit-autofill:active {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 5px;
 }
 
 .chat__info {
   display: flex;
   font-size: 1.2rem;
   border: none;
+  color: var(--color);
   background-color: transparent;
   cursor: pointer;
 }

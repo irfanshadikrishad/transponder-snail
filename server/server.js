@@ -13,7 +13,10 @@ import { Server } from "socket.io";
 config();
 database();
 const PORT = process.env.PORT || 3001;
-const Client = "https://transponder-snail.vercel.app";
+const Client = [
+  "https://transponder-snail.vercel.app",
+  "http://localhost:5173",
+];
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {

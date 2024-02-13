@@ -2,6 +2,18 @@
 
 Open Source MERN Stack chat app. The name transponder-snail is inspired by 'One Piece' communication device transponder snail AKA den-den-mushi.
 
+<h4>Features implemented in this chat app?</h4>
+
+- Real-time chat.
+- Login/Register user.
+- Secure Authentication with JWT.
+- See who's typing a message.
+- Group Chat features.
+- Protected routes.
+- Last message on chat drawer.
+- Search users to chat.
+- ...
+
 <h4>How to run locally?</h4>
 
 To run locally in your own device first clone the repository:
@@ -20,8 +32,17 @@ there are two main directories for server and client, you will need to install t
 
 ```ada
 cd client
+```
+
+```ada
 npm install
+```
+
+```ada
 cd ../server
+```
+
+```ada
 npm install
 ```
 
@@ -47,7 +68,7 @@ nodemon server.js
 
 if nodemon installed locally.
 
-<h4>Environment Variables:</h4>
+<h4>Environment Variables</h4>
 
 ```
 PORT=
@@ -56,13 +77,17 @@ SALT=
 SECRET=
 ```
 
-<h4>Stacks:</h4>
+<h4>What tech stacks are used?</h4>
 
-- MongoDB
-- Express
-- ReactJs
-- NodeJs
-- Socket.io
+- MongoDB (mongoose) for database
+- ExpressJs for Server
+- ReactJs for Front-End
+- NodeJs as JavaScript runtime Environment
+- Socket.io for Real-time chat
 
-<h4>Contribute:</h4>
-For contribution, please follow this <a href='https://docs.google.com/document/d/1bCX9bvNzWE1ObDnmUYCMF5H3CCWGgBiQbV_C0IhRLrc'>guide/instructions</a>.
+<h4>How to contribute?</h4>
+For contribution, please follow this <a href='https://docs.google.com/document/d/1bCX9bvNzWE1ObDnmUYCMF5H3CCWGgBiQbV_C0IhRLrc'>guide/instructions</a>. Any contribution to improve this project is appreciated.
+
+<br/>
+<br/>
+Thank You for visiting. (▀̿Ĺ̯▀̿ ̿)

@@ -1,4 +1,3 @@
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { useAuth } from "../store/user";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
@@ -6,6 +5,8 @@ import ScrollableFeed from "react-scrollable-feed";
 import io from "socket.io-client";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { IoInformationCircle } from "react-icons/io5";
+import { TbArrowBackUp } from "react-icons/tb";
 
 export default function SelectedChat({ setIsChatInfoOpen }) {
   const {
@@ -15,6 +16,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
     errorToast,
     defaultAvatar,
     selectedChat,
+    setSelectedChat,
     getAllChats,
   } = useAuth();
   const [content, setContent] = useState("");
@@ -137,7 +139,14 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
     <div>
       <section className="chat__header">
         {selectedChat && (
-          <div>
+          <div className="chat_header_left">
+            <button
+              onClick={() => {
+                setSelectedChat({});
+              }}
+            >
+              {<TbArrowBackUp />}
+            </button>
             <p>
               {selectedChat && selectedChat.isGroup
                 ? selectedChat.name
@@ -161,7 +170,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
           }}
           className="chat__info"
         >
-          {<HiOutlineDotsHorizontal />}
+          {<IoInformationCircle />}
         </button>
       </section>
       <section className="chat_textarea">
@@ -177,7 +186,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                 >
                   {message.sender._id !== user._id && (
                     <img
-                      data-tooltip-id="tooltip"
+                      data-tooltip-id={selectedChat.isGroup && "tooltip"}
                       data-tooltip-content={message.sender.name}
                       data-tooltip-place="top-start"
                       className="chat_avatar"
