@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../store/user";
 import { MdOutlineAdd } from "react-icons/md";
 import CreateGroupModal from "./CreateGroupModal";

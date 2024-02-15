@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "../store/user";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -6,7 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
 export default function Register({ loginview }) {
-  const { storeTokenInLS, API } = useAuth();
+  const avatarRef = useRef(null);
+  const { storeTokenInLS, API, defaultAvatar } = useAuth();
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
@@ -15,7 +16,7 @@ export default function Register({ loginview }) {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [avatar, setAvatar] = useState("null");
+  const [avatar, setAvatar] = useState(null);
 
   const handleInput = async (e) => {
     const { name, value } = e.target;
@@ -73,13 +74,29 @@ export default function Register({ loginview }) {
   return (
     <form onSubmit={register} className="home_login">
       <h1>Register</h1>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => {
-          setAvatar(e.target.files[0]);
+      <section
+        onClick={() => {
+          avatarRef.current.click();
         }}
-      />
+        className="register_avatar"
+      >
+        {
+          <img
+            src={avatar ? URL.createObjectURL(avatar) : defaultAvatar}
+            alt="defaultAvatar"
+            className="register_defaultAvatar"
+          />
+        }
+        <input
+          ref={avatarRef}
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={(e) => {
+            setAvatar(e.target.files[0]);
+          }}
+        />
+      </section>
       <input
         onChange={handleInput}
         className="form_input"
@@ -109,14 +126,14 @@ export default function Register({ loginview }) {
           required={true}
           autoComplete="true"
         />
-        <button
+        <div
           className="show_password"
           onClick={() => {
             setShowPassword(!showPassword);
           }}
         >
-          {showPassword ? <IoEyeOff /> : <IoEye />}
-        </button>
+          {showPassword ? <IoEye /> : <IoEyeOff />}
+        </div>
       </div>
       <button className="form_submit" type="submit">
         Register

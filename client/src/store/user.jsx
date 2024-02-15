@@ -25,32 +25,37 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getAllChats = async () => {
-    const request = await fetch(`${API}/api/chat/all`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const response = await request.json();
-    if (request.status === 200) {
-      setChats(response);
-    } else {
-      console.log(response);
+    if (token) {
+      const request = await fetch(`${API}/api/chat/all`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const response = await request.json();
+      if (request.status === 200) {
+        setChats(response);
+      } else {
+        console.log(response);
+      }
     }
   };
 
   const authenticate = async () => {
-    const request = await fetch(`${API}/api/auth/user`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const response = await request.json();
-    if (request.status === 200) {
-      setUser(response);
+    // It should prevent useless request on server now.
+    if (token) {
+      const request = await fetch(`${API}/api/auth/user`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const response = await request.json();
+      if (request.status === 200) {
+        setUser(response);
+      }
     }
   };
 

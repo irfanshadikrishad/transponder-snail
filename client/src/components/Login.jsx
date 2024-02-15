@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useAuth } from "../store/user";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
 export default function Login({ loginview }) {
-  const { storeTokenInLS, API } = useAuth();
+  const { storeTokenInLS, API, errorToast } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
@@ -18,19 +18,6 @@ export default function Login({ loginview }) {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-
-  function errorToast(error) {
-    toast.error(error, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  }
 
   const login = async (e) => {
     e.preventDefault();
@@ -71,15 +58,14 @@ export default function Login({ loginview }) {
           autoComplete="true"
           required={true}
         />
-        <button
-          type="submit"
+        <div
           className="show_password"
           onClick={() => {
             setShowPassword(!showPassword);
           }}
         >
-          {showPassword ? <IoEyeOff /> : <IoEye />}
-        </button>
+          {showPassword ? <IoEye /> : <IoEyeOff />}
+        </div>
       </div>
       <button className="form_submit" type="submit">
         Login

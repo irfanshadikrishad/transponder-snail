@@ -7,6 +7,7 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { IoInformationCircle } from "react-icons/io5";
 import { TbArrowBackUp } from "react-icons/tb";
+import { FiSend } from "react-icons/fi";
 
 export default function SelectedChat({ setIsChatInfoOpen }) {
   const {
@@ -184,6 +185,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                     message.sender._id === user._id ? "chat_i sent" : "chat_i"
                   }
                 >
+                  {/* if its logged in users message don't show the avatar */}
                   {message.sender._id !== user._id && (
                     <img
                       data-tooltip-id={selectedChat.isGroup && "tooltip"}
@@ -212,7 +214,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
               );
             })}
         </ScrollableFeed>
-        <form onSubmit={sendMessage}>
+        <form onSubmit={sendMessage} className="sendMessage">
           {isTyping && <p className="typing">{isTyping.name} is typing...</p>}
           <input
             value={content}
@@ -221,6 +223,9 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
             placeholder="send message..."
             autoComplete="off"
           />
+          <button type="submit" className="sendMessage_button">
+            {<FiSend />}
+          </button>
         </form>
       </section>
       <ToastContainer />

@@ -1,13 +1,17 @@
-export default function NotGroup({ reciver, defaultAvatar }) {
+import { useAuth } from "../store/user";
+
+export default function NotGroup({ user }) {
+  const { defaultAvatar } = useAuth();
+
   return (
     <div>
       <img
         className="chat_info_avatar"
         draggable="false"
-        src={reciver.avatar ? reciver.avatar.url : defaultAvatar}
+        src={user.avatar ? user.avatar.url : defaultAvatar}
       />
-      <h1 className="chat_info_name">{reciver.name}</h1>
-      <p>{reciver.email}</p>
+      <h1 className="chat_info_name">{user.name}</h1>
+      <p>{user.email}</p>
     </div>
   );
 }

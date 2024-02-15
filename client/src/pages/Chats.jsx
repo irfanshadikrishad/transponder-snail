@@ -7,7 +7,7 @@ import SelectedChat from "../components/SelectedChat.jsx";
 import NotSelectedChat from "../components/NotSelectedChat.jsx";
 import ChatLeft from "../components/ChatLeft.jsx";
 // TOASTIFY
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Chats() {

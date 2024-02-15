@@ -1,40 +1,16 @@
 import { useState } from "react";
-import { RxCross2 } from "react-icons/rx";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../store/user";
+import { RxCross2 } from "react-icons/rx";
+import { MdGroupAdd } from "react-icons/md";
 
 export default function isGroup({ selectedChat, isAdmin }) {
-  const { API, token, defaultAvatar } = useAuth();
+  const { API, token, defaultAvatar, successToast, errorToast } = useAuth();
   const { name, users } = selectedChat;
   const [modifiedUsers, setModifiedUsers] = useState(users);
   const [searchResults, setSearchResults] = useState([]);
-
-  function successToast(success) {
-    toast.success(success, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  }
-
-  function errorToast(error) {
-    toast.error(error, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  }
+  const [addMemberClicked, setAddMemberClicked] = useState(false);
 
   const deleteGroupMember = async (toBeDeletedId, toBeDeletedName) => {
     const request = await fetch(`${API}/api/chat/removeFromGroup`, {
@@ -97,11 +73,28 @@ export default function isGroup({ selectedChat, isAdmin }) {
       <h1>{name}</h1>
       <p className="group_header">Members:</p>
       <div className="group_members">
+        {isAdmin && (
+          <div
+            className="groupAddMember"
+            onClick={() => {
+              setAddMemberClicked(!addMemberClicked);
+            }}
+          >
+            {<MdGroupAdd />} Add Members
+          </div>
+        )}
         {modifiedUsers &&
           modifiedUsers.map((member, index) => {
             return (
               <div key={index} className="group_member">
-                <p>{member.name}</p>
+                <div className="groupMember_P1">
+                  <img
+                    src={member.avatar && member.avatar.url}
+                    className="group_memberAvatar"
+                    draggable="false"
+                  />
+                  <p>{member.name}</p>
+                </div>
                 {isAdmin && (
                   <button
                     onClick={() => {
@@ -115,7 +108,7 @@ export default function isGroup({ selectedChat, isAdmin }) {
             );
           })}
       </div>
-      {isAdmin && (
+      {isAdmin && addMemberClicked && (
         <input
           onChange={handleSearchUser}
           name="add"

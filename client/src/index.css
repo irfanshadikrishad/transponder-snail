@@ -131,7 +131,7 @@ nav {
   font-size: 1rem;
   border: none;
   background-color: transparent;
-  width: 92%;
+  width: 100%;
   outline: none;
   padding: 10px;
 }
@@ -217,12 +217,17 @@ nav {
   background-color: var(--background);
   cursor: pointer;
   z-index: 5;
+  /* to make text not selectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .navMenu {
   position: absolute;
-  top: 60px;
-  right: 5%;
+  top: 55px;
+  right: 0%;
   background-color: var(--background);
   display: flex;
   flex-direction: column;
@@ -443,12 +448,16 @@ input:-webkit-autofill:active {
   padding: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   box-shadow: 3px 3px 10px #35353529;
-  text-align: center;
 }
-
+.group_addButton {
+  display: flex;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+}
 .chat_info_avatar {
   width: 100px;
   height: 100px;
@@ -557,21 +566,39 @@ input:-webkit-autofill:active {
   cursor: pointer;
   display: flex;
 }
-
+.group_memberAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 .group_members {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 5px;
 }
-
+.groupMember_P1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .group_member {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 5px;
   background-color: #e5e5e5;
-  padding: 0 5px;
+  padding: 10px;
   border-radius: 5px;
+}
+.groupAddMember {
+  padding: 10px;
+  color: var(--color);
+  background-color: #e5e5e5;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
 }
 
 .group_member > button {
@@ -596,21 +623,41 @@ input:-webkit-autofill:active {
   border: none;
   outline: none;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   background-color: #e5e5e5;
   margin: 5px 0;
-  width: 100%;
+  width: -webkit-fill-available;
 }
 
-#send_message {
+.sendMessage {
   position: absolute;
-  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
   width: -webkit-fill-available;
+  bottom: 10px;
+  padding: 10px;
+  background-color: var(--secondary);
+  margin: 0 10px;
+  border-radius: 7px;
+}
+#send_message {
   font-size: 1rem;
   border: none;
   outline: none;
-  padding: 10px;
-  margin: 10px;
+  color: var(--color);
+  background-color: transparent;
+  width: 100%;
+}
+.sendMessage_button {
+  border: none;
+  outline: none;
+  background-color: var(--background);
+  cursor: pointer;
+  display: flex;
+  font-size: 1rem;
+  padding: 5px 10px;
   border-radius: 7px;
 }
 
@@ -658,6 +705,18 @@ input:-webkit-autofill:active {
 .hide {
   display: none !important;
 }
+.register_avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.register_defaultAvatar {
+  width: 100px;
+  height: 100px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 980px) {
   .chats {
@@ -665,6 +724,9 @@ input:-webkit-autofill:active {
   }
 }
 @media screen and (max-width: 600px) {
+  .search_drawer {
+    width: -webkit-fill-available;
+  }
   .chat_info_card,
   .profile_modal_card,
   .create_group_inside {

@@ -5,19 +5,23 @@ import { useAuth } from "../store/user";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-    const navigate = useNavigate();
-    const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
-    const [isLoginView, setIsLoginView] = useState(true);
+  const [isLoginView, setIsLoginView] = useState(true);
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            navigate('/chats');
-        }
-    }, [])
-    return (
-        <section className="home_auth">
-            {isLoginView ? <Login loginview={setIsLoginView} /> : <Register loginview={setIsLoginView} />}
-        </section>
-    )
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/chats");
+    }
+  }, []);
+  return (
+    <section className="home_auth">
+      {isLoginView ? (
+        <Login loginview={setIsLoginView} />
+      ) : (
+        <Register loginview={setIsLoginView} />
+      )}
+    </section>
+  );
 }

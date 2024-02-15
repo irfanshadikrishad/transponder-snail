@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useAuth } from "../store/user";
@@ -6,7 +5,7 @@ import IsGroup from "./IsGroup";
 import NotGroup from "./NotGroup";
 
 export default function ChatInfoModal({ chatClose }) {
-  const { user, defaultAvatar, selectedChat } = useAuth();
+  const { user, selectedChat } = useAuth();
   const [reciver, setReciver] = useState({});
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -35,11 +34,14 @@ export default function ChatInfoModal({ chatClose }) {
         }
       }}
     >
-      <section className="chat_info_card">
+      <section
+        className="chat_info_card"
+        style={{ textAlign: !selectedChat.isGroup && "center" }}
+      >
         {selectedChat.isGroup ? (
           <IsGroup isAdmin={isAdmin} selectedChat={selectedChat} />
         ) : (
-          <NotGroup defaultAvatar={defaultAvatar} reciver={reciver} />
+          <NotGroup user={reciver} />
         )}
       </section>
     </section>,
