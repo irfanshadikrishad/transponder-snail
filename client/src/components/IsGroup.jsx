@@ -23,6 +23,7 @@ export default function isGroup({ selectedChat, isAdmin }) {
     });
     const response = await request.json();
     if (request.status === 200) {
+      setModifiedUsers(response.users);
       successToast(`${toBeDeletedName} has been kicked out.`);
     } else {
       errorToast(response.error);
@@ -47,24 +48,40 @@ export default function isGroup({ selectedChat, isAdmin }) {
       }
     }
   };
-  const addToGroup = async (toBeAddedMember, toBeAddedObject) => {
-    const request = await fetch(`${API}/api/chat/addToGroup`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        userId: toBeAddedMember,
-        chatId: selectedChat._id,
-      }),
+
+  function doesUserExist(userId) {
+    let exist = false;
+    modifiedUsers.map((user) => {
+      if (user._id === userId) {
+        console.log(user._id, userId);
+        exist = true;
+      }
     });
-    const response = await request.json();
-    if (request.status === 200) {
-      successToast(`${toBeAddedObject.name} added to the group.`);
-      setModifiedUsers([...modifiedUsers, toBeAddedObject]);
+    return exist;
+  }
+
+  const addToGroup = async (toBeAddedMember_Id, toBeAddedMember_Object) => {
+    if (!doesUserExist(toBeAddedMember_Id)) {
+      const request = await fetch(`${API}/api/chat/addToGroup`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          userId: toBeAddedMember_Id,
+          chatId: selectedChat._id,
+        }),
+      });
+      const response = await request.json();
+      if (request.status === 200) {
+        successToast(`${toBeAddedMember_Object.name} added to the group.`);
+        setModifiedUsers([...modifiedUsers, toBeAddedMember_Object]);
+      } else {
+        errorToast(response.error);
+      }
     } else {
-      errorToast(response.error);
+      errorToast(`${toBeAddedMember_Object.name} already exist in the group.`);
     }
   };
 
@@ -89,7 +106,7 @@ export default function isGroup({ selectedChat, isAdmin }) {
               <div key={index} className="group_member">
                 <div className="groupMember_P1">
                   <img
-                    src={member.avatar && member.avatar.url}
+                    src={member.avatar ? member.avatar.url : defaultAvatar}
                     className="group_memberAvatar"
                     draggable="false"
                   />

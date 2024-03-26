@@ -2,9 +2,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
 
 :root {
-  --color: #353535;
-  --background: #f5f5f5;
-  --secondary: #ededed;
+  --color: #eeeeee;
+  --background: #222831;
+  --secondary: #31363f;
+
+  --chat_self: #5c8374;
+  --chat_notself: #76abae;
 }
 
 * {
@@ -35,6 +38,7 @@ input:-webkit-autofill:active {
 
 .home_auth {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100vw;
@@ -46,6 +50,9 @@ input:-webkit-autofill:active {
   flex-direction: column;
   gap: 5px;
   width: 300px;
+}
+.home_login > h1 {
+  color: var(--chat_notself);
 }
 
 .show_password {
@@ -62,6 +69,7 @@ input:-webkit-autofill:active {
   border: none;
   outline: none;
   padding: 10px;
+  color: var(--chat_notself);
   background-color: var(--secondary);
   border-radius: 7px;
 }
@@ -79,8 +87,8 @@ input:-webkit-autofill:active {
   padding: 10px;
   border: none;
   border-radius: 7px;
-  color: var(--background);
-  background-color: var(--color);
+  color: var(--chat_notself);
+  background-color: var(--secondary);
   cursor: pointer;
 }
 
@@ -90,7 +98,7 @@ input:-webkit-autofill:active {
 
 .switch_lr {
   cursor: pointer;
-  color: seagreen;
+  color: var(--chat_self);
 }
 
 nav {
@@ -130,6 +138,7 @@ nav {
 .search_drawer_i > input {
   font-size: 1rem;
   border: none;
+  color: var(--chat_notself);
   background-color: transparent;
   width: 100%;
   outline: none;
@@ -178,6 +187,7 @@ nav {
   display: flex;
   font-size: 1.2rem;
   border: none;
+  color: var(--chat_notself);
   background-color: transparent;
   cursor: pointer;
 }
@@ -196,6 +206,7 @@ nav {
   border: none;
   cursor: pointer;
   padding: 5px;
+  color: var(--chat_notself);
   background-color: transparent;
 }
 
@@ -241,6 +252,7 @@ nav {
   border: none;
   font-size: 1rem;
   cursor: pointer;
+  color: var(--chat_notself);
   background-color: var(--background);
 }
 
@@ -269,10 +281,13 @@ nav {
   align-items: center;
   justify-content: space-between;
 }
-
+.chat1_header > p {
+  color: var(--chat_notself);
+}
 .chat1_header > button {
   font-size: 1rem;
   border: none;
+  color: var(--chat_notself);
   background-color: var(--background);
   padding: 5px;
   border-radius: 7px;
@@ -286,10 +301,14 @@ nav {
   gap: 10px;
 }
 .chat_header_left > button {
+  color: var(--chat_notself);
   background-color: transparent;
   border: none;
   font-size: 1rem;
   cursor: pointer;
+}
+.navbar_right > h1 {
+  color: var(--chat_notself);
 }
 
 .chat_tab {
@@ -303,13 +322,15 @@ nav {
   line-height: 20px;
 }
 .opponents {
-  color: var(--color);
+  color: var(--chat_notself);
   font-weight: 600;
 }
-
+.drawer_chat > p {
+  color: var(--chat_notself);
+}
 .opponents_lastMessage {
   color: var(--color);
-  opacity: 90%;
+  opacity: 60%;
   font-size: 0.9rem;
   line-height: 15px;
 }
@@ -360,7 +381,7 @@ nav {
 .profile_modal_card {
   position: fixed;
   width: 500px;
-  background-color: var(--background);
+  background-color: var(--secondary);
   padding: 10px;
   border-radius: 7px;
   height: 200px;
@@ -374,10 +395,13 @@ nav {
 
 .profile_modal_card > h1 {
   font-size: 1.5rem;
+  color: var(--chat_notself);
 }
 
 .profile_modal_card > p {
   font-size: 1rem;
+  color: var(--color);
+  opacity: 70%;
 }
 
 input:-webkit-autofill,
@@ -404,10 +428,12 @@ input:-webkit-autofill:active {
   justify-content: center;
   height: 100%;
   opacity: 70%;
+  color: var(--chat_notself);
 }
 
 .not_selected_icon {
   font-size: 2rem;
+  color: var(--chat_notself);
 }
 
 .chat__header {
@@ -421,9 +447,12 @@ input:-webkit-autofill:active {
   display: flex;
   font-size: 1.2rem;
   border: none;
-  color: var(--color);
+  color: var(--chat_notself);
   background-color: transparent;
   cursor: pointer;
+}
+.chat_header_left > p {
+  color: var(--chat_notself);
 }
 
 .chat_info_background {
@@ -484,7 +513,7 @@ input:-webkit-autofill:active {
 
 .create_group_inside {
   width: 450px;
-  background-color: var(--background);
+  background-color: var(--secondary);
   padding: 10px;
   border-radius: 7px;
   display: flex;
@@ -514,7 +543,7 @@ input:-webkit-autofill:active {
   border-radius: 7px;
   background-color: var(--background);
   cursor: pointer;
-  width: 100%;
+  width: -webkit-fill-available;
 }
 
 .create_group_buttons {
@@ -523,7 +552,7 @@ input:-webkit-autofill:active {
 }
 
 .create_group_user_text {
-  line-height: 25px;
+  line-height: 20px;
 }
 
 .create_group_inside > input {
@@ -532,13 +561,21 @@ input:-webkit-autofill:active {
   outline: none;
   padding: 10px;
   border-radius: 7px;
+  color: var(--chat_notself);
+  background-color: var(--background);
 }
-
+.create_group_user_text > p:first-child {
+  color: var(--chat_notself);
+}
+.create_group_user_text > p:last-child {
+  color: var(--color);
+  opacity: 60%;
+}
 .create_group_buttons > button {
   border: none;
   font-size: 1rem;
-  color: var(--secondary);
-  background-color: var(--color);
+  color: var(--chat_notself);
+  background-color: var(--background);
   padding: 8px 25px;
   border-radius: 7px;
   cursor: pointer;
@@ -580,20 +617,21 @@ input:-webkit-autofill:active {
   display: flex;
   align-items: center;
   gap: 5px;
+  color: var(--chat_notself);
 }
 .group_member {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 5px;
-  background-color: #e5e5e5;
+  background-color: var(--background);
   padding: 10px;
   border-radius: 5px;
 }
 .groupAddMember {
   padding: 10px;
-  color: var(--color);
-  background-color: #e5e5e5;
+  color: var(--chat_notself);
+  background-color: var(--background);
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -604,6 +642,7 @@ input:-webkit-autofill:active {
 .group_member > button {
   display: flex;
   border: none;
+  color: tomato;
   background-color: transparent;
   font-size: 1rem;
   cursor: pointer;
@@ -612,6 +651,7 @@ input:-webkit-autofill:active {
 .selectedGroup > h1 {
   font-size: 1.5rem;
   margin-bottom: 10px;
+  color: var(--chat_notself);
 }
 
 .group_header {
@@ -624,7 +664,8 @@ input:-webkit-autofill:active {
   outline: none;
   border-radius: 5px;
   padding: 10px;
-  background-color: #e5e5e5;
+  color: var(--color);
+  background-color: var(--background);
   margin: 5px 0;
   width: -webkit-fill-available;
 }
@@ -653,6 +694,7 @@ input:-webkit-autofill:active {
 .sendMessage_button {
   border: none;
   outline: none;
+  color: var(--chat_notself);
   background-color: var(--background);
   cursor: pointer;
   display: flex;
@@ -688,10 +730,10 @@ input:-webkit-autofill:active {
   border-radius: 5px;
 }
 .chat_self {
-  background-color: rgb(11, 116, 11);
+  background-color: var(--chat_self);
 }
 .chat_notself {
-  background-color: rgb(6, 121, 167);
+  background-color: var(--chat_notself);
 }
 .sent {
   align-self: flex-end;
@@ -717,6 +759,33 @@ input:-webkit-autofill:active {
   border-radius: 50%;
   cursor: pointer;
 }
+
+.home_social {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.home_social > a {
+  font-size: 1.3rem;
+  background-color: transparent;
+  border: none;
+  color: var(--chat_notself);
+  margin-top: 10px;
+}
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: var(--chat_notself);
+  opacity: 60%;
+}
+.error_gif {
+  width: 100px;
+  height: auto;
+}
+/*  */
 
 @media screen and (max-width: 980px) {
   .chats {

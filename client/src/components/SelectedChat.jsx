@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import ScrollableFeed from "react-scrollable-feed";
 import io from "socket.io-client";
+import { Helmet } from "react-helmet";
+// TOOLTIP
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+// ICONS
 import { IoInformationCircle } from "react-icons/io5";
 import { TbArrowBackUp } from "react-icons/tb";
 import { FiSend } from "react-icons/fi";
@@ -138,6 +141,15 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
 
   return (
     <div>
+      <Helmet>
+        <title>
+          {selectedChat.name
+            ? `@${selectedChat.name} / transponder-snail`
+            : user.name === selectedChat.users[0].name
+            ? `${selectedChat.users[1].name} / transponder-snail`
+            : `${selectedChat.users[0].name} / transponder-snail`}
+        </title>
+      </Helmet>
       <section className="chat__header">
         {selectedChat && (
           <div className="chat_header_left">

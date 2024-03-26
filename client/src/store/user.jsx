@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const API = "https://transponder-snail.onrender.com";
+  let API = "https://transponder-snail.onrender.com";
   const defaultAvatar =
     "https://i.pinimg.com/564x/a3/ce/d8/a3ced81768f0d838ac1dada5a85b7ac2.jpg";
   const [token, setToken] = useState(localStorage.getItem("logger"));
@@ -13,6 +13,9 @@ export const AuthProvider = ({ children }) => {
   const [chats, setChats] = useState([]);
   const isLoggedIn = !!token;
   const [selectedChat, setSelectedChat] = useState({});
+
+  // Comment out before deploying
+  // API = "http://localhost:3001";
 
   const storeTokenInLS = (token) => {
     setToken(token);

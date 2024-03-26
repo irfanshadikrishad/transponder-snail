@@ -22,7 +22,7 @@ export default function Chats() {
     }
 
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 960);
     };
 
     window.addEventListener("resize", checkScreenSize);
