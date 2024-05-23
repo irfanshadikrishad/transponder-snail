@@ -785,6 +785,9 @@ input:-webkit-autofill:active {
   width: 100px;
   height: auto;
 }
+.noImageSender {
+  margin-left: 45px;
+}
 /*  */
 
 @media screen and (max-width: 980px) {

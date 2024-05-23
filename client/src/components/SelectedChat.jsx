@@ -189,38 +189,66 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
       <section className="chat_textarea">
         <ScrollableFeed>
           {allMessages &&
-            allMessages.map((message, index) => {
+            allMessages.map(({ sender, content, name, chat }, index) => {
+              const previousMessageSender =
+                index > 0 ? allMessages[index - 1] : null;
+
               return (
                 <div
                   key={index}
-                  className={
-                    message.sender._id === user._id ? "chat_i sent" : "chat_i"
-                  }
+                  className={sender._id === user._id ? "chat_i sent" : "chat_i"}
                 >
                   {/* if its logged in users message don't show the avatar */}
-                  {message.sender._id !== user._id && (
-                    <img
-                      data-tooltip-id={selectedChat.isGroup && "tooltip"}
-                      data-tooltip-content={message.sender.name}
-                      data-tooltip-place="top-start"
-                      className="chat_avatar"
-                      src={
-                        message.sender.avatar.url
-                          ? message.sender.avatar.url
-                          : defaultAvatar
-                      }
-                      alt={`${message.name}'s avatar`}
-                      draggable="false"
-                    />
-                  )}
+                  {sender._id !== user._id && previousMessageSender
+                    ? previousMessageSender.sender.email !== sender.email && (
+                        <img
+                          data-tooltip-id={selectedChat.isGroup && "tooltip"}
+                          data-tooltip-content={sender.name}
+                          data-tooltip-place="top-start"
+                          className="chat_avatar"
+                          src={
+                            sender.avatar.url
+                              ? sender.avatar.url
+                              : defaultAvatar
+                          }
+                          alt={`${name}'s avatar`}
+                          draggable="false"
+                        />
+                      )
+                    : sender._id !== user._id && (
+                        <img
+                          data-tooltip-id={selectedChat.isGroup && "tooltip"}
+                          data-tooltip-content={sender.name}
+                          data-tooltip-place="top-start"
+                          className="chat_avatar"
+                          src={
+                            sender.avatar.url
+                              ? sender.avatar.url
+                              : defaultAvatar
+                          }
+                          alt={`${name}'s avatar`}
+                          draggable="false"
+                        />
+                      )}
                   <p
                     className={
-                      message.sender._id === user._id
-                        ? "chat_back chat_self"
-                        : "chat_back chat_notself"
+                      // sender._id === user._id
+                      //   ? "chat_back chat_self"
+                      //   : previousMessageSender &&
+                      //     previousMessageSender.email !== sender.email
+                      //   ? "chat_back chat_notself"
+                      //   : "chat_back chat_notself noImageSender"
+                      sender._id === user.id
+                        ? `chat_back chat_self`
+                        : `chat_back chat_notself ${
+                            previousMessageSender &&
+                            previousMessageSender.sender.email ===
+                              sender.email &&
+                            "noImageSender"
+                          }`
                     }
                   >
-                    {message.content}
+                    {content}
                   </p>
                 </div>
               );
