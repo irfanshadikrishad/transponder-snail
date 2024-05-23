@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { RxCross2 } from "react-icons/rx";
 
 export default function CreateGroupModal({ setIsGroupModalActive }) {
-  const { API, defaultAvatar, token, getAllChats, errorToast } = useAuth();
+  const { API, defaultAvatar, token, getAllChats, errorToast, user } =
+    useAuth();
   const [searchResults, setSearchResults] = useState([]);
   const [groupUsers, setGroupUsers] = useState([]);
   const [groupName, setGroupName] = useState("");
@@ -25,9 +26,10 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
   const addToGroup = async (toBeAddedObject) => {
     if (!isDuplicate(groupUsers, toBeAddedObject)) {
       setGroupUsers([...groupUsers, toBeAddedObject]);
-    } else {
-      console.log(`duplicate detected ${toBeAddedObject.name}`);
     }
+    // else {
+    //   console.log(`duplicate detected ${toBeAddedObject.name}`);
+    // }
   };
   const removeFromGroup = async (toBeRemoved) => {
     let newGroupUsers = groupUsers.filter(
@@ -64,9 +66,12 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ users: users, name: groupName }),
+        body: JSON.stringify({
+          users: users,
+          name: groupName === "" ? `${user.name}'s group` : groupName,
+        }),
       });
-      const response = await request.json();
+      const { message } = await request.json();
       if (request.status === 201) {
         setIsGroupModalActive(false);
         setGroupName("");
@@ -74,7 +79,7 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
         setSearchResults([]);
         getAllChats();
       } else {
-        errorToast(response.message);
+        errorToast(message);
       }
     }
   };

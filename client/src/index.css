@@ -53,6 +53,7 @@ input:-webkit-autofill:active {
 }
 .home_login > h1 {
   color: var(--chat_notself);
+  text-align: center;
 }
 
 .show_password {
@@ -99,6 +100,20 @@ input:-webkit-autofill:active {
 .switch_lr {
   cursor: pointer;
   color: var(--chat_self);
+  text-align: center;
+}
+
+.home_social_container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--background);
+  border: 2px dashed var(--chat_self);
+  border-radius: 8px;
+  width: 280px;
+  padding: 0 8px;
 }
 
 nav {
@@ -580,6 +595,11 @@ input:-webkit-autofill:active {
   border-radius: 7px;
   cursor: pointer;
 }
+.create_group_buttons > button:first-child {
+  background-color: var(--secondary);
+  color: var(--color);
+  opacity: 50%;
+}
 
 .added_users {
   display: flex;
@@ -588,7 +608,8 @@ input:-webkit-autofill:active {
 }
 
 .addedUser {
-  background-color: rgb(229, 231, 231);
+  color: var(--chat_notself);
+  background-color: var(--background);
   padding: 0 5px;
   border-radius: 5px;
   display: flex;
@@ -598,6 +619,7 @@ input:-webkit-autofill:active {
 
 .addedUser > button {
   border: none;
+  color: tomato;
   background-color: transparent;
   font-size: 1rem;
   cursor: pointer;
@@ -761,9 +783,10 @@ input:-webkit-autofill:active {
 }
 
 .home_social {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
 }
 .home_social > a {
   font-size: 1.3rem;
