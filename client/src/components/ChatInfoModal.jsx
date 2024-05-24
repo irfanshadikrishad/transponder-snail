@@ -39,7 +39,11 @@ export default function ChatInfoModal({ chatClose }) {
         style={{ textAlign: !selectedChat.isGroup && "center" }}
       >
         {selectedChat.isGroup ? (
-          <IsGroup isAdmin={isAdmin} selectedChat={selectedChat} />
+          <IsGroup
+            isAdmin={isAdmin}
+            selectedChat={selectedChat}
+            chatClose={chatClose}
+          />
         ) : (
           <NotGroup user={reciver} />
         )}

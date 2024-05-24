@@ -670,7 +670,30 @@ input:-webkit-autofill:active {
   cursor: pointer;
 }
 
-.selectedGroup > h1 {
+.selectedGroupName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.selectedGroupName > button {
+  background-color: transparent;
+  border: none;
+  color: var(--chat_self);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.selectedGroupName > input {
+  background-color: var(--background);
+  border: none;
+  font-size: 1.5rem;
+  padding: 5px 15px;
+  border-radius: 8px;
+  outline: none;
+  color: var(--chat_notself);
+  width: 100%;
+}
+.selectedGroupName > h1 {
   font-size: 1.5rem;
   margin-bottom: 10px;
   color: var(--chat_notself);

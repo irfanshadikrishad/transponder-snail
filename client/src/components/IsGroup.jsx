@@ -2,15 +2,27 @@ import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../store/user";
+// ICONS
 import { RxCross2 } from "react-icons/rx";
 import { MdGroupAdd } from "react-icons/md";
+import { FiEdit3, FiCheck } from "react-icons/fi";
 
-export default function isGroup({ selectedChat, isAdmin }) {
-  const { API, token, defaultAvatar, successToast, errorToast } = useAuth();
+export default function isGroup({ selectedChat, isAdmin, chatClose }) {
+  const {
+    API,
+    token,
+    defaultAvatar,
+    successToast,
+    errorToast,
+    getAllChats,
+    setSelectedChat,
+  } = useAuth();
   const { name, users } = selectedChat;
   const [modifiedUsers, setModifiedUsers] = useState(users);
   const [searchResults, setSearchResults] = useState([]);
   const [addMemberClicked, setAddMemberClicked] = useState(false);
+  const [isEditNameOn, setIsEditNameOn] = useState(false);
+  const [newChatName, setNewChatName] = useState("");
 
   const deleteGroupMember = async (toBeDeletedId, toBeDeletedName) => {
     const request = await fetch(`${API}/api/chat/removeFromGroup`, {
@@ -60,6 +72,28 @@ export default function isGroup({ selectedChat, isAdmin }) {
     return exist;
   }
 
+  const renameGroup = async () => {
+    const request = await fetch(`${API}/api/chat/renameGroup`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ chatId: selectedChat._id, chatName: newChatName }),
+    });
+
+    const { error } = await request.json();
+    if (request.status === 200) {
+      successToast(`name updated successfully`);
+      setIsEditNameOn(false);
+      chatClose();
+      setSelectedChat({});
+      getAllChats();
+    } else {
+      errorToast(error);
+    }
+  };
+
   const addToGroup = async (toBeAddedMember_Id, toBeAddedMember_Object) => {
     if (!doesUserExist(toBeAddedMember_Id)) {
       const request = await fetch(`${API}/api/chat/addToGroup`, {
@@ -87,7 +121,32 @@ export default function isGroup({ selectedChat, isAdmin }) {
 
   return (
     <section className="selectedGroup">
-      <h1>{name}</h1>
+      <section className="selectedGroupName">
+        {isEditNameOn && isAdmin ? (
+          <input
+            type="text"
+            placeholder={name}
+            value={newChatName}
+            onChange={(e) => {
+              setNewChatName(e.target.value);
+            }}
+          />
+        ) : (
+          <h1>{name}</h1>
+        )}
+        {isAdmin && isEditNameOn && (
+          <button onClick={renameGroup}>{<FiCheck />}</button>
+        )}
+        {isAdmin && (
+          <button
+            onClick={() => {
+              setIsEditNameOn(!isEditNameOn);
+            }}
+          >
+            {<FiEdit3 />}
+          </button>
+        )}
+      </section>
       <p className="group_header">Members:</p>
       <div className="group_members">
         {isAdmin && (
