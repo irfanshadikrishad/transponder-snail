@@ -7,6 +7,7 @@ import {
   renameGroup,
   addToGroup,
   removeFromGroup,
+  deleteGroup,
 } from "../controllers/chatController.js";
 
 const router = Router();
@@ -17,5 +18,6 @@ router.post("/createGroup", authMiddleware, createGroupChat);
 router.put("/renameGroup", authMiddleware, renameGroup);
 router.put("/addToGroup", authMiddleware, addToGroup);
 router.put("/removeFromGroup", authMiddleware, removeFromGroup);
+router.delete("/delete_group", authMiddleware, deleteGroup);
 
 export default router;

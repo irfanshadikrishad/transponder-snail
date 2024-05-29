@@ -114,6 +114,16 @@ const renameGroup = async (req, res) => {
   }
 };
 
+const deleteGroup = async (req, res) => {
+  try {
+    const { chatId } = await req.body;
+    const delete_group = await Chat.findByIdAndDelete(chatId);
+    res.status(200).json(delete_group);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+};
+
 const addToGroup = async (req, res) => {
   try {
     const { chatId, userId } = await req.body;
@@ -163,4 +173,5 @@ export {
   renameGroup,
   addToGroup,
   removeFromGroup,
+  deleteGroup,
 };
