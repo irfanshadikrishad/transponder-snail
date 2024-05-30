@@ -134,9 +134,9 @@ nav {
 
 .search_drawer {
   position: absolute;
-  background: var(--secondary);
+  background: var(--background);
   height: 98vh;
-  width: 250px;
+  width: 20%;
   top: 0;
   left: 0;
   padding: 10px;
@@ -154,10 +154,17 @@ nav {
   font-size: 1rem;
   border: none;
   color: var(--chat_notself);
-  background-color: transparent;
+  background-color: var(--secondary);
   width: 100%;
   outline: none;
   padding: 10px;
+  border-radius: 4px;
+}
+.search_drawer_i > input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--secondary) inset !important;
 }
 
 .search_drawer_i > button {
@@ -872,6 +879,13 @@ input:-webkit-autofill:active {
   text-align: center;
 }
 /*  */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+}
 
 @media screen and (max-width: 980px) {
   .chats {
