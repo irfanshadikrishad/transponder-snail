@@ -2,9 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
 
 :root {
-  --color: #eeeeee;
-  --background: #222831;
-  --secondary: #31363f;
+  --color: #252525;
+  --background: #e2e2e2;
+  --secondary: #efefef;
 
   --chat_self: #5c8374;
   --chat_notself: #76abae;
@@ -187,7 +187,7 @@ input:-webkit-autofill:active {
   align-items: flex-start;
   gap: 10px;
   padding: 10px;
-  background-color: var(--background);
+  background-color: var(--secondary);
   border-radius: 7px;
   cursor: pointer;
 }
@@ -284,7 +284,9 @@ input:-webkit-autofill:active {
   gap: 5px;
   margin-top: 5px;
 }
-
+.info_wrapper {
+  padding: 25px 0;
+}
 .chat {
   padding: 10px;
   background-color: var(--secondary);
@@ -485,7 +487,7 @@ input:-webkit-autofill:active {
   left: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   background-color: rgba(10, 10, 10, 0.062);
   z-index: 5;
@@ -493,13 +495,13 @@ input:-webkit-autofill:active {
 
 .chat_info_card {
   width: 424px;
-  min-height: 165px;
-  background-color: var(--secondary);
+  min-height: 100vh;
+  background-color: var(--background);
   border-radius: 7px;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   box-shadow: 3px 3px 10px #35353529;
 }
 .group_addButton {
@@ -563,7 +565,7 @@ input:-webkit-autofill:active {
   gap: 5px;
   padding: 5px;
   border-radius: 7px;
-  background-color: var(--background);
+  background-color: var(--secondary);
   cursor: pointer;
   width: -webkit-fill-available;
 }
@@ -653,7 +655,7 @@ input:-webkit-autofill:active {
   align-items: center;
   justify-content: space-between;
   gap: 5px;
-  background-color: var(--background);
+  background-color: var(--secondary);
   padding: 10px;
   border-radius: 5px;
 }
@@ -679,31 +681,59 @@ input:-webkit-autofill:active {
 
 .selectedGroupName {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 5px;
 }
-.selectedGroupName > button {
-  background-color: transparent;
+.group_rename {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 5px;
+  width: -webkit-fill-available;
+}
+.group_rename > button {
+  background-color: var(--chat_notself);
   border: none;
-  color: var(--chat_self);
-  font-size: 1rem;
+  color: var(--background);
+  font-size: 1.2rem;
+  padding: 2px 0;
+  border-radius: 4px;
   cursor: pointer;
 }
+.notGroup_btns {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+.notGroup_btn {
+  border: none;
+  font-size: 1rem;
+  padding: 8px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
 .selectedGroupName > input {
-  background-color: var(--background);
+  background-color: var(--secondary);
   border: none;
   font-size: 1.5rem;
   padding: 5px 15px;
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   color: var(--chat_notself);
-  width: 100%;
+  width: -webkit-fill-available;
 }
 .selectedGroupName > h1 {
   font-size: 1.5rem;
   margin-bottom: 10px;
   color: var(--chat_notself);
+  width: 100%;
 }
 
 .group_header {
@@ -717,7 +747,7 @@ input:-webkit-autofill:active {
   border-radius: 5px;
   padding: 10px;
   color: var(--color);
-  background-color: var(--background);
+  background-color: var(--secondary);
   margin: 5px 0;
   width: -webkit-fill-available;
 }
@@ -844,7 +874,7 @@ input:-webkit-autofill:active {
 
 .groupDivider {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
   gap: 5px;
   align-items: end;
 }
@@ -877,6 +907,10 @@ input:-webkit-autofill:active {
 .createdAt {
   font-size: 0.9rem;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 /*  */
 

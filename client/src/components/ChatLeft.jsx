@@ -40,9 +40,15 @@ export default function ChatLeft() {
                 <p className="opponents">
                   {!chat.isGroup && chat.users[1]
                     ? chat.users[1]._id !== user._id
-                      ? chat.users[1].name
-                      : chat.users[0].name
-                    : chat.name}
+                      ? String(chat.users[1].name).length > 15
+                        ? `${String(chat.users[1].name).slice(0, 15)}...`
+                        : String(chat.users[1].name)
+                      : String(chat.users[0].name).length > 15
+                      ? `${String(chat.users[0].name).slice(0, 15)}...`
+                      : String(chat.users[0].name)
+                    : String(chat.name).length > 15
+                    ? `${String(chat.name).slice(0, 15)}...`
+                    : String(chat.name)}
                 </p>
                 {chat.latest && (
                   <p className="opponents_lastMessage">

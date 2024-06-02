@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../store/user";
 // ICONS
 import { RxCross2 } from "react-icons/rx";
-import { MdGroupAdd, MdReportProblem } from "react-icons/md";
+import { MdGroupAdd, MdReportProblem, MdInfoOutline } from "react-icons/md";
 import { FiEdit3, FiCheck } from "react-icons/fi";
 import { RiChatDeleteFill } from "react-icons/ri";
 import { FaPersonRunning } from "react-icons/fa6";
@@ -189,7 +189,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
   }
 
   return (
-    <section className="selectedGroup">
+    <section className="selectedGroup info_wrapper">
       <section className="selectedGroupName">
         {isEditNameOn && isAdmin ? (
           <input
@@ -203,21 +203,23 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
         ) : (
           <h1>{name}</h1>
         )}
-        {isAdmin && isEditNameOn && (
-          <button onClick={renameGroup}>{<FiCheck />}</button>
-        )}
-        {isAdmin && (
-          <button
-            onClick={() => {
-              setIsEditNameOn(!isEditNameOn);
-            }}
-          >
-            {<FiEdit3 />}
-          </button>
-        )}
+        <div className="group_rename">
+          {isAdmin && isEditNameOn && (
+            <button onClick={renameGroup}>{<FiCheck />}</button>
+          )}
+          {isAdmin && (
+            <button
+              onClick={() => {
+                setIsEditNameOn(!isEditNameOn);
+              }}
+            >
+              {<FiEdit3 />}
+            </button>
+          )}
+        </div>
       </section>
       <p className="createdAt">
-        created at: {convertTimestamp(selectedChat.createdAt)}
+        <MdInfoOutline /> created at: {convertTimestamp(selectedChat.createdAt)}
       </p>
       <section className="groupDivider">
         <div>
@@ -234,21 +236,24 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
               </div>
             )}
             {modifiedUsers &&
-              modifiedUsers.map((member, index) => {
+              modifiedUsers.map(({ _id, avatar, name }, index) => {
                 return (
                   <div key={index} className="group_member">
                     <div className="groupMember_P1">
                       <img
-                        src={member.avatar ? member.avatar.url : defaultAvatar}
+                        src={avatar ? avatar.url : defaultAvatar}
                         className="group_memberAvatar"
                         draggable="false"
+                        onError={(e) => {
+                          e.target.src = defaultAvatar;
+                        }}
                       />
-                      <p>{member.name}</p>
+                      <p>{name}</p>
                     </div>
-                    {isAdmin && (
+                    {user._id !== _id && isAdmin && (
                       <button
                         onClick={() => {
-                          deleteGroupMember(member._id, member.name);
+                          deleteGroupMember(_id, name);
                         }}
                       >
                         {<RxCross2 />}
@@ -291,27 +296,28 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
         />
       )}
       <div className="create_group_searched">
-        {searchResults.map((search) => {
-          return (
-            <div
-              key={search._id}
-              onClick={() => {
-                addToGroup(search._id, search);
-              }}
-              className="create_group_user_search"
-            >
-              <img
-                draggable="false"
-                className="create_group_user_avatar"
-                src={search.avatar ? search.avatar.url : defaultAvatar}
-              />
-              <div className="create_group_user_text">
-                <p>{search.name}</p>
-                <p>{search.email}</p>
+        {addMemberClicked &&
+          searchResults.map((search) => {
+            return (
+              <div
+                key={search._id}
+                onClick={() => {
+                  addToGroup(search._id, search);
+                }}
+                className="create_group_user_search"
+              >
+                <img
+                  draggable="false"
+                  className="create_group_user_avatar"
+                  src={search.avatar ? search.avatar.url : defaultAvatar}
+                />
+                <div className="create_group_user_text">
+                  <p>{search.name}</p>
+                  <p>{search.email}</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
       <ToastContainer />
     </section>

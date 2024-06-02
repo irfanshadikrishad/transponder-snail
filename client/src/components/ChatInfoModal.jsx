@@ -45,7 +45,11 @@ export default function ChatInfoModal({ chatClose }) {
             chatClose={chatClose}
           />
         ) : (
-          <NotGroup user={reciver} />
+          <NotGroup
+            user={reciver}
+            selectedChat={selectedChat}
+            chatClose={chatClose}
+          />
         )}
       </section>
     </section>,
