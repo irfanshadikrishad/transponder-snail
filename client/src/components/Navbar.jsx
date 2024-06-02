@@ -2,10 +2,8 @@ import { useState } from "react";
 import { useAuth } from "../store/user";
 // COMPONENTS
 import Drawer from "./Drawer";
-import NavMenu from "./NavMenu";
 // ICONS
 import { FiSearch } from "react-icons/fi";
-import { IoChevronDownOutline } from "react-icons/io5";
 import UserInfoModal from "./UserInfoModal";
 
 export default function Navbar() {
@@ -26,10 +24,11 @@ export default function Navbar() {
         </button>
         {isDrawerOpen && <Drawer isdrawer={setIsDrawerOpen} />}
       </div>
+
       {profileModal && <UserInfoModal profileModalSwitch={setProfileModal} />}
       <div
         onClick={() => {
-          setIsMenu(!isMenu);
+          setProfileModal(true);
         }}
         className="navbar_right"
       >
@@ -38,8 +37,6 @@ export default function Navbar() {
           src={user.avatar ? user.avatar.url : defaultAvatar}
         />
         <h1>{user.name}</h1>
-        {<IoChevronDownOutline />}
-        {isMenu && <NavMenu profileModal={setProfileModal} />}
       </div>
     </nav>
   );

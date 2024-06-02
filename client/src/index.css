@@ -387,6 +387,7 @@ input:-webkit-autofill:active {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  margin-top: 25px;
 }
 
 .profile_modal {
@@ -398,21 +399,21 @@ input:-webkit-autofill:active {
   background-color: rgba(10, 10, 10, 0.062);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   z-index: 10;
 }
 
 .profile_modal_card {
   position: fixed;
-  width: 500px;
+  width: 350px;
   background-color: var(--secondary);
   padding: 10px;
   border-radius: 7px;
-  height: 200px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   box-shadow: 3px 3px 10px #35353529;
   z-index: 100;
 }
@@ -426,6 +427,24 @@ input:-webkit-autofill:active {
   font-size: 1rem;
   color: var(--color);
   opacity: 70%;
+}
+.profile_btns {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: 1fr;
+  width: 100%;
+  margin-top: 20px;
+}
+.profile_btn {
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--background);
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 input:-webkit-autofill,
@@ -711,13 +730,12 @@ input:-webkit-autofill:active {
 .notGroup_btn {
   border: none;
   font-size: 1rem;
-  padding: 8px 0;
+  padding: 8px;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
+  gap: 10px;
 }
 .selectedGroupName > input {
   background-color: var(--secondary);
