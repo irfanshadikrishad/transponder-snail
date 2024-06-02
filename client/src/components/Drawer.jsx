@@ -4,25 +4,41 @@ import { useAuth } from "../store/user";
 import { AiOutlineClose } from "react-icons/ai";
 
 export default function Drawer({ isdrawer }) {
-  const { API, token, defaultAvatar, getAllChats } = useAuth();
+  const { API, token, defaultAvatar, getAllChats, chats, setSelectedChat } =
+    useAuth();
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const createSingleChat = async (id) => {
-    const request = await fetch(`${API}/api/chat/single`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ userId: id }),
+    let alreadyExists = false;
+    chats.map((ch_t, index) => {
+      if (!ch_t.isGroup) {
+        ch_t.users.map((userInChat) => {
+          if (id === userInChat._id) {
+            alreadyExists = true;
+            setSelectedChat(ch_t);
+          }
+        });
+      }
     });
-    const response = await request.json();
-    if (request.status === 200) {
-      isdrawer(false);
-      getAllChats();
+    if (!alreadyExists) {
+      const request = await fetch(`${API}/api/chat/single`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId: id }),
+      });
+      const response = await request.json();
+      if (request.status === 200) {
+        isdrawer(false);
+        getAllChats();
+      } else {
+        console.log(response);
+      }
     } else {
-      console.log(response);
+      isdrawer(false);
     }
   };
 
@@ -46,6 +62,8 @@ export default function Drawer({ isdrawer }) {
       } else {
         console.log(response);
       }
+    } else {
+      setUsers([]);
     }
   };
   return (

@@ -6,6 +6,7 @@ import { RiLogoutBoxRFill } from "react-icons/ri";
 import { TbHelpHexagonFilled } from "react-icons/tb";
 import { FaLanguage } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
+import { PiUserCircleGearBold } from "react-icons/pi";
 
 export default function UserInfoModal({ profileModalSwitch }) {
   const navigate = useNavigate();
@@ -40,6 +41,9 @@ export default function UserInfoModal({ profileModalSwitch }) {
               </button>
               <button disabled className="profile_btn">
                 <TbHelpHexagonFilled /> Help
+              </button>
+              <button disabled className="profile_btn">
+                <PiUserCircleGearBold /> Settings
               </button>
               <button
                 className="profile_btn delete_group"

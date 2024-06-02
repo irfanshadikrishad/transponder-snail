@@ -54,11 +54,14 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
       if (request.status === 200) {
         setSearchResults(response);
       }
+    } else {
+      setSearchResults([]);
     }
   };
 
   const createGroupChat = async () => {
     const users = groupUsers.map((gusers) => gusers._id);
+    const users_names = groupUsers.map((gusers) => gusers.name).join(", ");
     if (users) {
       const request = await fetch(`${API}/api/chat/createGroup`, {
         method: "POST",
@@ -68,7 +71,7 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
         },
         body: JSON.stringify({
           users: users,
-          name: groupName === "" ? `${user.name}'s group` : groupName,
+          name: groupName === "" ? users_names : groupName,
         }),
       });
       const { message } = await request.json();

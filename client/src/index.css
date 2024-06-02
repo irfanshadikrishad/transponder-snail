@@ -21,6 +21,10 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+a {
+  color: rgb(16, 80, 255);
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -488,7 +492,7 @@ input:-webkit-autofill:active {
 
 .chat__info {
   display: flex;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   border: none;
   color: var(--chat_notself);
   background-color: transparent;
@@ -753,7 +757,11 @@ input:-webkit-autofill:active {
   color: var(--chat_notself);
   width: 100%;
 }
-
+.selectedChat_buns {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 .group_header {
   text-align: left;
 }
@@ -904,7 +912,7 @@ input:-webkit-autofill:active {
 .groupDivider_right > button {
   border: none;
   color: var(--color);
-  background-color: var(--background);
+  background-color: #e6e6e6;
   width: 100%;
   display: flex;
   align-items: center;

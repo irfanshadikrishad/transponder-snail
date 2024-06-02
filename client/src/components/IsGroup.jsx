@@ -81,6 +81,8 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
       if (request.status === 200) {
         setSearchResults(response);
       }
+    } else {
+      setSearchResults([]);
     }
   };
 

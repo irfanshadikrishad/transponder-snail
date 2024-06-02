@@ -11,6 +11,9 @@ import "react-tooltip/dist/react-tooltip.css";
 import { IoInformationCircle } from "react-icons/io5";
 import { TbArrowBackUp } from "react-icons/tb";
 import { FiSend } from "react-icons/fi";
+import { IoMdCall, IoIosVideocam } from "react-icons/io";
+// UTILS
+import { linkify } from "../utils/linkify";
 
 export default function SelectedChat({ setIsChatInfoOpen }) {
   const {
@@ -178,14 +181,22 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
             </p>
           </div>
         )}
-        <button
-          onClick={() => {
-            setIsChatInfoOpen(true);
-          }}
-          className="chat__info"
-        >
-          {<IoInformationCircle />}
-        </button>
+        <section className="selectedChat_buns">
+          <button disabled className="chat__info">
+            <IoMdCall />
+          </button>
+          <button disabled className="chat__info">
+            <IoIosVideocam />
+          </button>
+          <button
+            onClick={() => {
+              setIsChatInfoOpen(true);
+            }}
+            className="chat__info"
+          >
+            {<IoInformationCircle />}
+          </button>
+        </section>
       </section>
       <section className="chat_textarea">
         <ScrollableFeed>
@@ -254,9 +265,10 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                               "noImageSender"
                             }`
                       }
-                    >
-                      {content}
-                    </p>
+                      dangerouslySetInnerHTML={{
+                        __html: linkify(content),
+                      }}
+                    ></p>
                   </div>
                 );
               }
