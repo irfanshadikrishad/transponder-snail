@@ -1,6 +1,7 @@
+"use client";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useAuth } from "../store/user";
+import { useAuth } from "@/store/user";
 import IsGroup from "./IsGroup";
 import NotGroup from "./NotGroup";
 
@@ -8,6 +9,11 @@ export default function ChatInfoModal({ chatClose }) {
   const { user, selectedChat } = useAuth();
   const [reciver, setReciver] = useState({});
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const isAdminChecker = async () => {
     if (selectedChat.isAdmin && selectedChat.isAdmin._id === user._id) {
@@ -18,13 +24,19 @@ export default function ChatInfoModal({ chatClose }) {
   };
 
   useEffect(() => {
-    isAdminChecker();
-    if (user._id === selectedChat.users[0]._id) {
-      setReciver(selectedChat.users[1]);
-    } else {
-      setReciver(selectedChat.users[0]);
+    if (selectedChat && user) {
+      isAdminChecker();
+      if (user._id === selectedChat.users[0]._id) {
+        setReciver(selectedChat.users[1]);
+      } else {
+        setReciver(selectedChat.users[0]);
+      }
     }
-  }, [selectedChat]);
+  }, [selectedChat, user]);
+
+  // Prevent rendering before the client has mounted
+  if (!isClient) return null;
+
   return createPortal(
     <section
       className="chat_info_background"

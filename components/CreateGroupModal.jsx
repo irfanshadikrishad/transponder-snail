@@ -1,8 +1,7 @@
 "use client";
-import { useState } from "react";
-import { useAuth } from "../store/user";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-// TOASTIFY
+import { useAuth } from "@/store/user";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // ICONS
@@ -14,6 +13,13 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
   const [searchResults, setSearchResults] = useState([]);
   const [groupUsers, setGroupUsers] = useState([]);
   const [groupName, setGroupName] = useState("");
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
 
   function isDuplicate(arr, newObj) {
     for (let obj of arr) {
@@ -24,19 +30,16 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
     return false;
   }
 
-  const addToGroup = async (toBeAddedObject) => {
+  const addToGroup = (toBeAddedObject) => {
     if (!isDuplicate(groupUsers, toBeAddedObject)) {
       setGroupUsers([...groupUsers, toBeAddedObject]);
     }
-    // else {
-    //   console.log(`duplicate detected ${toBeAddedObject.name}`);
-    // }
   };
-  const removeFromGroup = async (toBeRemoved) => {
-    let newGroupUsers = groupUsers.filter(
-      (existedUser) => existedUser._id !== toBeRemoved._id
+
+  const removeFromGroup = (toBeRemoved) => {
+    setGroupUsers(
+      groupUsers.filter((existedUser) => existedUser._id !== toBeRemoved._id)
     );
-    setGroupUsers(newGroupUsers);
   };
 
   const handleCreateSearch = async (e) => {
@@ -92,29 +95,20 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
     <section className="create_group_modal">
       <section className="create_group_inside">
         <input
-          onChange={(e) => {
-            setGroupName(e.target.value);
-          }}
+          onChange={(e) => setGroupName(e.target.value)}
           name="groupName"
           type="text"
           placeholder="Group Name..."
         />
         <div className="added_users">
-          {groupUsers &&
-            groupUsers.map((group, i) => {
-              return (
-                <div key={i} className="addedUser">
-                  {group.name}{" "}
-                  <button
-                    onClick={() => {
-                      removeFromGroup(group);
-                    }}
-                  >
-                    {<RxCross2 />}
-                  </button>
-                </div>
-              );
-            })}
+          {groupUsers.map((group, i) => (
+            <div key={i} className="addedUser">
+              {group.name}{" "}
+              <button onClick={() => removeFromGroup(group)}>
+                <RxCross2 />
+              </button>
+            </div>
+          ))}
         </div>
         <input
           onChange={handleCreateSearch}
@@ -122,44 +116,27 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
           placeholder="Search..."
         />
         <div className="create_group_searched">
-          {searchResults &&
-            searchResults.map((search, i) => {
-              return (
-                <div
-                  onClick={() => {
-                    addToGroup(search);
-                  }}
-                  key={i}
-                  className="create_group_user_search"
-                >
-                  <img
-                    draggable="false"
-                    className="create_group_user_avatar"
-                    src={search.avatar ? search.avatar.url : defaultAvatar}
-                  />
-                  <div className="create_group_user_text">
-                    <p>{search.name}</p>
-                    <p>{search.email}</p>
-                  </div>
-                </div>
-              );
-            })}
+          {searchResults.map((search, i) => (
+            <div
+              onClick={() => addToGroup(search)}
+              key={i}
+              className="create_group_user_search"
+            >
+              <img
+                draggable="false"
+                className="create_group_user_avatar"
+                src={search.avatar ? search.avatar.url : defaultAvatar}
+              />
+              <div className="create_group_user_text">
+                <p>{search.name}</p>
+                <p>{search.email}</p>
+              </div>
+            </div>
+          ))}
         </div>
         <div className="create_group_buttons">
-          <button
-            onClick={() => {
-              setIsGroupModalActive(false);
-            }}
-          >
-            Close
-          </button>
-          <button
-            onClick={() => {
-              createGroupChat();
-            }}
-          >
-            Create
-          </button>
+          <button onClick={() => setIsGroupModalActive(false)}>Close</button>
+          <button onClick={createGroupChat}>Create</button>
         </div>
       </section>
       <ToastContainer />

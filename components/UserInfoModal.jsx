@@ -1,6 +1,8 @@
-import { useAuth } from "../store/user";
-import { createPortal } from "react-dom";
+"use client";
+import { useAuth } from "@/store/user";
 import { useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
 // ICONS
 import { RiLogoutBoxRFill } from "react-icons/ri";
 import { TbHelpHexagonFilled } from "react-icons/tb";
@@ -11,6 +13,14 @@ import { PiUserCircleGearBold } from "react-icons/pi";
 export default function UserInfoModal({ profileModalSwitch }) {
   const router = useRouter();
   const { user, defaultAvatar, deleteTokenFromLS } = useAuth();
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
 
   return createPortal(
     <section>
