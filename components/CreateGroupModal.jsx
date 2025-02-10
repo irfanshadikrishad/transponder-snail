@@ -8,8 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { RxCross2 } from "react-icons/rx";
 
 export default function CreateGroupModal({ setIsGroupModalActive }) {
-  const { API, defaultAvatar, token, getAllChats, errorToast, user } =
-    useAuth();
+  const { defaultAvatar, token, getAllChats, errorToast, user } = useAuth();
   const [searchResults, setSearchResults] = useState([]);
   const [groupUsers, setGroupUsers] = useState([]);
   const [groupName, setGroupName] = useState("");
@@ -44,16 +43,13 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
 
   const handleCreateSearch = async (e) => {
     if (e.target.value !== "") {
-      const request = await fetch(
-        `${API}/api/users/?search=${e.target.value}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const request = await fetch(`/api/users/?search=${e.target.value}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const response = await request.json();
       if (request.status === 200) {
         setSearchResults(response);
@@ -67,7 +63,7 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
     const users = groupUsers.map((gusers) => gusers._id);
     const users_names = groupUsers.map((gusers) => gusers.name).join(", ");
     if (users) {
-      const request = await fetch(`${API}/api/chat/createGroup`, {
+      const request = await fetch(`/api/chat/group/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

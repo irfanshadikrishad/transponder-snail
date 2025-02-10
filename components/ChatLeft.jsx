@@ -5,8 +5,8 @@ import CreateGroupModal from "./CreateGroupModal";
 import io from "socket.io-client";
 
 export default function ChatLeft() {
-  const { API, setSelectedChat, user, chats } = useAuth();
-  let socket = io(API);
+  const { setSelectedChat, user, chats, SOCKET_SERVER_URL } = useAuth();
+  let socket = io(SOCKET_SERVER_URL);
   const [isGroupModalActive, setIsGroupModalActive] = useState(false);
 
   const getSelectedChat = async (chat) => {

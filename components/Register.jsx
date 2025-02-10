@@ -8,7 +8,7 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 
 export default function Register({ loginview }) {
   const avatarRef = useRef(null);
-  const { storeTokenInLS, API, defaultAvatar } = useAuth();
+  const { storeTokenInLS, defaultAvatar } = useAuth();
   const router = useRouter();
 
   const [user, setUser] = useState({
@@ -52,7 +52,7 @@ export default function Register({ loginview }) {
     );
     const avatarResponse = await avatarRequest.json();
 
-    const request = await fetch(`${API}/api/auth/register`, {
+    const request = await fetch(`/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

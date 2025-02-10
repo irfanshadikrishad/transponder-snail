@@ -5,7 +5,7 @@ import { useAuth } from "../store/user";
 import { AiOutlineClose } from "react-icons/ai";
 
 export default function Drawer({ isdrawer }) {
-  const { API, token, defaultAvatar, getAllChats, chats, setSelectedChat } =
+  const { token, defaultAvatar, getAllChats, chats, setSelectedChat } =
     useAuth();
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,7 +23,7 @@ export default function Drawer({ isdrawer }) {
       }
     });
     if (!alreadyExists) {
-      const request = await fetch(`${API}/api/chat/single`, {
+      const request = await fetch(`/api/chat/single`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,16 +46,13 @@ export default function Drawer({ isdrawer }) {
   const getSearchAll = async (e) => {
     setSearchQuery(e.target.value);
     if (e.target.value !== "") {
-      const request = await fetch(
-        `${API}/api/users/?search=${e.target.value}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const request = await fetch(`/api/users/?search=${e.target.value}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const response = await request.json();
 
       if (request.status === 200) {

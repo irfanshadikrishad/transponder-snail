@@ -250,7 +250,7 @@ input:-webkit-autofill:active {
   border-radius: 7px;
   background-color: var(--background);
   cursor: pointer;
-  z-index: 5;
+  /* z-index: 5; */
   /* to make text not selectable */
   -webkit-user-select: none;
   -moz-user-select: none;

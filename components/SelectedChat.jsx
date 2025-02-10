@@ -18,13 +18,13 @@ import { linkify } from "@/utils/helpers";
 export default function SelectedChat({ setIsChatInfoOpen }) {
   const {
     user,
-    API,
     token,
     errorToast,
     defaultAvatar,
     selectedChat,
     setSelectedChat,
     getAllChats,
+    SOCKET_SERVER_URL,
   } = useAuth();
   const [content, setContent] = useState("");
   const [allMessages, setAllMessages] = useState([]);
@@ -38,7 +38,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
   useEffect(() => {
     getAllMessages();
     if (selectedChat) {
-      const newSocket = io(API);
+      const newSocket = io(SOCKET_SERVER_URL);
       newSocket.emit("setup", user);
       newSocket.on("connect", () => {
         setIsSocketConnected(true);
@@ -46,20 +46,18 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
       setSocket(newSocket);
       setSelectedChatToBeCompared(selectedChat);
     }
-  }, [selectedChat, API, user]);
+  }, [selectedChat, SOCKET_SERVER_URL, user]);
 
   const getAllMessages = async () => {
     if (selectedChat._id) {
-      const request = await fetch(
-        `${API}/api/message/single/${selectedChat._id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const request = await fetch(`/api/message/single`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ chatId: selectedChat._id }),
+      });
       const response = await request.json();
 
       if (request.status === 200) {
@@ -74,7 +72,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
     e.preventDefault();
     socket.emit("stop_typing", selectedChat, user);
     if (content && isSocketConntected) {
-      const request = await fetch(`${API}/api/message/send`, {
+      const request = await fetch(`/api/message/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

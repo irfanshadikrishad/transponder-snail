@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const messageSchema = new Schema(
   {
@@ -14,9 +14,9 @@ const messageSchema = new Schema(
       ref: "Chat",
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-const Message = model("Message", messageSchema);
+const Message = models.Message || model("Message", messageSchema);
 
 export default Message;

@@ -7,17 +7,11 @@ import { MdClearAll } from "react-icons/md";
 import { CgClose } from "react-icons/cg";
 
 export default function NotGroup({ user, selectedChat, chatClose }) {
-  const {
-    API,
-    defaultAvatar,
-    token,
-    errorToast,
-    setSelectedChat,
-    getAllChats,
-  } = useAuth();
+  const { defaultAvatar, token, errorToast, setSelectedChat, getAllChats } =
+    useAuth();
 
   const deleteChat = async (chatId) => {
-    const request = await fetch(`${API}/api/chat/delete_group`, {
+    const request = await fetch(`/api/chat/group/delete`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

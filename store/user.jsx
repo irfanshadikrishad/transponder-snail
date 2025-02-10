@@ -7,6 +7,10 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const defaultAvatar = "./avatar.jpg";
+  const SOCKET_SERVER_URL =
+    typeof window !== "undefined"
+      ? window.location.origin
+      : "http://localhost:3000";
 
   const getStoredToken = () =>
     typeof window !== "undefined" ? localStorage.getItem("logger") : null;
@@ -33,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
   const getAllChats = async () => {
     if (token) {
-      const request = await fetch(`/api/chat/all`, {
+      const request = await fetch(`/api/chat`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
   const authenticate = async () => {
     if (token) {
-      const request = await fetch(`/api/auth/user`, {
+      const request = await fetch(`/api/user`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -111,6 +115,7 @@ export const AuthProvider = ({ children }) => {
         errorToast,
         selectedChat,
         setSelectedChat,
+        SOCKET_SERVER_URL,
       }}
     >
       {children}

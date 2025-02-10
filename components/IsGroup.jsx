@@ -12,7 +12,6 @@ import { FaPersonRunning } from "react-icons/fa6";
 
 export default function isGroup({ selectedChat, isAdmin, chatClose }) {
   const {
-    API,
     token,
     defaultAvatar,
     successToast,
@@ -29,7 +28,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
   const [newChatName, setNewChatName] = useState("");
 
   const deleteGroupMember = async (toBeDeletedId, toBeDeletedName) => {
-    const request = await fetch(`${API}/api/chat/removeFromGroup`, {
+    const request = await fetch(`/api/chat/group/remove`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +46,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
   };
 
   const leaveGroup = async (user_id) => {
-    const request = await fetch(`${API}/api/chat/removeFromGroup`, {
+    const request = await fetch(`/api/chat/group/remove`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -68,16 +67,13 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
 
   const handleSearchUser = async (e) => {
     if (e.target.value !== "") {
-      const request = await fetch(
-        `${API}/api/users/?search=${e.target.value}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const request = await fetch(`/api/users/?search=${e.target.value}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const response = await request.json();
       if (request.status === 200) {
         setSearchResults(response);
@@ -99,7 +95,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
   }
 
   const renameGroup = async () => {
-    const request = await fetch(`${API}/api/chat/renameGroup`, {
+    const request = await fetch(`/api/chat/group/rename`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +118,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
 
   const addToGroup = async (toBeAddedMember_Id, toBeAddedMember_Object) => {
     if (!doesUserExist(toBeAddedMember_Id)) {
-      const request = await fetch(`${API}/api/chat/addToGroup`, {
+      const request = await fetch(`/api/chat/group/add`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +142,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
   };
 
   const deleteGroup = async (chatId) => {
-    const request = await fetch(`${API}/api/chat/delete_group`, {
+    const request = await fetch(`/api/chat/group/delete`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
