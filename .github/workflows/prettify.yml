@@ -1,0 +1,43 @@
+name: Prettify
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: Install dependencies
+        run: npm install
+      - name: Run Prettier
+        run: npm run format
+      - name: Commit and push changes back to PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name 'Irfan Shadik Rishad'
+          git config --global user.email '77362427+irfanshadikrishad@users.noreply.github.com'
+          git add .
+          CHANGED_FILES=$(git diff --cached --name-only)
+          if [[ -n "$CHANGED_FILES" ]]; then
+            echo "The following files were modified:"
+            echo "$CHANGED_FILES"
+            git commit -m "fix: prettier formatting"
+            git push origin HEAD:${{ github.head_ref }}
+          else
+            echo "No changes to commit."
+          fi

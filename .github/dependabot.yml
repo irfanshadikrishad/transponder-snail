@@ -3,10 +3,14 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     commit-message:
-      prefix: "chore"
+      prefix: "chore(deps)"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     groups:
       all-dependencies:
         patterns:
           - "*"
+    labels:
+      - "dependencies"
+      - "javascript"
+    versioning-strategy: "increase"

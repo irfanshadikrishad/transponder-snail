@@ -1,0 +1,39 @@
+name: Linter
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: Install dependencies
+        run: npm install
+      - name: Run EsLint without fix
+        run: npm run lint
+      - name: Commit and push changes back to PR
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git diff --quiet || git commit -m "chore: apply linting fixes"
+          git push origin HEAD:${{ github.head_ref }}
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
