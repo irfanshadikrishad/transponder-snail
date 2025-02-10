@@ -15,10 +15,13 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
     "next": "15.1.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-icons": "^5.4.0",
-    "react-toastify": "^11.0.3"
+    "react-scrollable-feed": "^2.0.2",
+    "react-toastify": "^11.0.3",
+    "react-tooltip": "^5.28.0",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
