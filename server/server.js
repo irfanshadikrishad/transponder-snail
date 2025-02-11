@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
     });
   });
   socket.on("send_message", (message) => {
-    let chat = message.chat;
+    const chat = message.chat;
     if (!chat.users) {
       return console.log("no users");
     } else {

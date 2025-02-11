@@ -9,7 +9,7 @@ const getSingleChat = async (req, res) => {
     return res.status(400);
   }
 
-  var isChat = await Chat.find({
+  const isChat = await Chat.find({
     isGroupChat: false,
     $and: [
       { users: { $elemMatch: { $eq: req.id } } },
@@ -35,7 +35,7 @@ const getSingleChat = async (req, res) => {
       });
       const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
         "users",
-        "-password"
+        "-password",
       );
       res.status(200).json(FullChat);
     } catch (error) {
@@ -70,7 +70,7 @@ const getAllChats = async (req, res) => {
 
 const createGroupChat = async (req, res) => {
   try {
-    let users = await req.body.users;
+    const users = await req.body.users;
     if (users.length < 2) {
       res.status(400).json({ message: "Requires more than 2 users." });
     } else {
@@ -132,7 +132,7 @@ const addToGroup = async (req, res) => {
       {
         $push: { users: userId },
       },
-      { new: true }
+      { new: true },
     )
       .populate("users", { password: 0 })
       .populate("isAdmin", { password: 0 });
@@ -153,7 +153,7 @@ const removeFromGroup = async (req, res) => {
       {
         $pull: { users: userId },
       },
-      { new: true }
+      { new: true },
     )
       .populate("users", { password: 0 })
       .populate("isAdmin", { password: 0 });

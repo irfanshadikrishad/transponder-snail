@@ -10,6 +10,9 @@ updates:
       - "dependencies"
       - "javascript"
     versioning-strategy: "increase"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "npm"
     directory: "/server"
@@ -21,3 +24,6 @@ updates:
       - "dependencies"
       - "javascript"
     versioning-strategy: "increase"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
