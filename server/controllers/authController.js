@@ -9,34 +9,40 @@ const SALT = genSaltSync(Number(process.env.SALT));
 
 const register = async (req, res) => {
   try {
-    const { name, email, password, avatar } = await req.body;
+    const { name, email, password, avatar } = req.body;
+
     if (!name || !email || !password) {
-      res.status(400).json({ message: "All fields must filled properly." });
-    } else {
-      const isExist = await User.findOne({ email });
-      if (isExist) {
-        res
-          .status(400)
-          .json({ message: "User already exists, you can log in." });
-      } else {
-        const hashedPassword = hashSync(password, SALT);
-        const user = new User({
-          name,
-          email,
-          password: hashedPassword,
-          avatar,
-        });
-        const savedUser = await user.save();
-        res.status(201).json({
-          id: savedUser._id,
-          email: savedUser.email,
-          token: savedUser.genJWT(),
-        });
-        console.log(chalk.cyan(`[register] ${savedUser._id} // registered`));
-      }
+      return res
+        .status(400)
+        .json({ message: "All fields must be filled properly." });
     }
+
+    const isExist = await User.findOne({ email });
+    if (isExist) {
+      return res
+        .status(400)
+        .json({ message: "User already exists, you can log in." });
+    }
+
+    const hashedPassword = hashSync(password, SALT);
+
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      avatar,
+    });
+
+    const savedUser = await user.save();
+    res.status(201).json({
+      id: savedUser._id,
+      email: savedUser.email,
+      token: savedUser.genJWT(),
+    });
   } catch (error) {
-    console.log(chalk.magenta(`[register] ${error.message}`));
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: `${error.message}` });
   }
 };
 

@@ -9,13 +9,13 @@ const SECRET = process.env.SECRET;
 const userSchema = Schema(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     avatar: {
       type: Object,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 userSchema.methods.genJWT = function () {
@@ -25,7 +25,7 @@ userSchema.methods.genJWT = function () {
       email: this.email,
     },
     SECRET,
-    { expiresIn: "30d" },
+    { expiresIn: "30d" }
   );
 };
 
