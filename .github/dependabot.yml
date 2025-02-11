@@ -1,12 +1,23 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/client"
     commit-message:
-      prefix: "chore"
+      prefix: "chore(client)"
     schedule:
-      interval: "weekly"
-    groups:
-      all-dependencies:
-        patterns:
-          - "*"
+      interval: "daily"
+    labels:
+      - "dependencies"
+      - "javascript"
+    versioning-strategy: "increase"
+
+  - package-ecosystem: "npm"
+    directory: "/server"
+    commit-message:
+      prefix: "chore(server)"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependencies"
+      - "javascript"
+    versioning-strategy: "increase"
