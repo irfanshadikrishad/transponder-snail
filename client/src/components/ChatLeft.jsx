@@ -3,9 +3,10 @@ import { useAuth } from "../store/user";
 import { MdOutlineAdd } from "react-icons/md";
 import CreateGroupModal from "./CreateGroupModal";
 import io from "socket.io-client";
+import { getAvatar } from "../utils/helpers";
 
 export default function ChatLeft() {
-  const { API, setSelectedChat, user, chats } = useAuth();
+  const { API, setSelectedChat, user, chats, defaultAvatar } = useAuth();
   let socket = io(API);
   const [isGroupModalActive, setIsGroupModalActive] = useState(false);
 
@@ -29,6 +30,8 @@ export default function ChatLeft() {
       <div className="chat_all">
         {chats &&
           chats.map((chat) => {
+            console.log(chat);
+
             return (
               <div
                 key={chat._id}
@@ -37,28 +40,38 @@ export default function ChatLeft() {
                 }}
                 className="chat_tab"
               >
-                <p className="opponents">
-                  {!chat.isGroup && chat.users[1]
-                    ? chat.users[1]._id !== user._id
-                      ? String(chat.users[1].name).length > 30
-                        ? `${String(chat.users[1].name).slice(0, 30)}...`
-                        : String(chat.users[1].name)
-                      : String(chat.users[0].name).length > 30
-                      ? `${String(chat.users[0].name).slice(0, 30)}...`
-                      : String(chat.users[0].name)
-                    : String(chat.name).length > 30
-                    ? `${String(chat.name).slice(0, 30)}...`
-                    : String(chat.name)}
-                </p>
-                {chat.latest && (
-                  <p className="opponents_lastMessage">
-                    {chat.latest.sender._id === user._id
-                      ? `You: `
-                      : chat.isGroup && `${chat.latest.sender.name}: `}
-                    {chat.latest.content &&
-                      `${String(chat.latest.content).slice(0, 20)}...`}
+                <img
+                  className="c1"
+                  src={
+                    chat.isGroup
+                      ? defaultAvatar
+                      : getAvatar(chat.users, user)
+                        ? getAvatar(chat.users, user)
+                        : defaultAvatar
+                  }
+                  alt=""
+                  draggable="false"
+                  onError={(e) => {
+                    e.target.src = defaultAvatar;
+                  }}
+                />
+                <div className="c2">
+                  <p className="opponents one_line">
+                    {!chat.isGroup
+                      ? chat.users[1] && chat.users[1]._id !== user._id
+                        ? chat.users[1].name
+                        : chat.users[0].name
+                      : chat.name}
                   </p>
-                )}
+                  {chat.latest && (
+                    <p className="opponents_lastMessage one_line">
+                      {chat.latest.sender._id === user._id
+                        ? `You: `
+                        : chat.isGroup && `${chat.latest.sender.name}: `}
+                      {chat.latest.content && chat.latest.content}
+                    </p>
+                  )}
+                </div>
               </div>
             );
           })}

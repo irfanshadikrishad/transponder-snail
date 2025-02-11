@@ -42,6 +42,9 @@ export default function NotGroup({ user, selectedChat, chatClose }) {
         className="chat_info_avatar"
         draggable="false"
         src={user.avatar ? user.avatar.url : defaultAvatar}
+        onError={(e) => {
+          e.target.src = defaultAvatar;
+        }}
       />
       <h1 className="chat_info_name">{user.name}</h1>
       <p>{user.email}</p>

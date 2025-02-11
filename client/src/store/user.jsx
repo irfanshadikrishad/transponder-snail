@@ -6,8 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   let API = "https://transponder-snail.onrender.com";
-  const defaultAvatar =
-    "https://i.pinimg.com/564x/a3/ce/d8/a3ced81768f0d838ac1dada5a85b7ac2.jpg";
+  const defaultAvatar = "/da.jpg";
   const [token, setToken] = useState(localStorage.getItem("logger"));
   const [user, setUser] = useState({});
   const [chats, setChats] = useState([]);

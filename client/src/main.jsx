@@ -7,5 +7,5 @@ import { AuthProvider } from "./store/user.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthProvider>
     <App />
-  </AuthProvider>
+  </AuthProvider>,
 );

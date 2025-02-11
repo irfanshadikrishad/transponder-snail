@@ -28,6 +28,9 @@ export default function UserInfoModal({ profileModalSwitch }) {
               className="inspect_avatar"
               src={user.avatar ? user.avatar.url : defaultAvatar}
               draggable="false"
+              onError={(e) => {
+                e.target.src = defaultAvatar;
+              }}
             />
             <h1>{user.name}</h1>
             <p>{user.email}</p>
@@ -59,6 +62,6 @@ export default function UserInfoModal({ profileModalSwitch }) {
         )}
       </section>
     </section>,
-    document.getElementById("user_info")
+    document.getElementById("user_info"),
   );
 }
