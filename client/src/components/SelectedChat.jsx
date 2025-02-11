@@ -58,7 +58,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       const response = await request.json();
 
@@ -150,8 +150,8 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
           {selectedChat.name
             ? `@${selectedChat.name} / transponder-snail`
             : user.name === selectedChat.users[0].name
-            ? `${selectedChat.users[1].name} / transponder-snail`
-            : `${selectedChat.users[0].name} / transponder-snail`}
+              ? `${selectedChat.users[1].name} / transponder-snail`
+              : `${selectedChat.users[0].name} / transponder-snail`}
         </title>
       </Helmet>
       <section className="chat__header">
@@ -168,16 +168,16 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
               {selectedChat && selectedChat.isGroup
                 ? selectedChat.name
                 : selectedChat &&
-                  selectedChat.users &&
-                  selectedChat.users.length > 0 &&
-                  selectedChat.users[0]._id === user._id // check if in index 0 current user or not
-                ? selectedChat.users.length > 1
-                  ? selectedChat.users[1].name
-                  : null // Return null if there's only one user in the chat
-                : selectedChat &&
-                  selectedChat.users &&
-                  selectedChat.users.length > 0 &&
-                  selectedChat.users[0].name}
+                    selectedChat.users &&
+                    selectedChat.users.length > 0 &&
+                    selectedChat.users[0]._id === user._id // check if in index 0 current user or not
+                  ? selectedChat.users.length > 1
+                    ? selectedChat.users[1].name
+                    : null // Return null if there's only one user in the chat
+                  : selectedChat &&
+                    selectedChat.users &&
+                    selectedChat.users.length > 0 &&
+                    selectedChat.users[0].name}
             </p>
           </div>
         )}
@@ -271,7 +271,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                     ></p>
                   </div>
                 );
-              }
+              },
             )}
         </ScrollableFeed>
         <form onSubmit={sendMessage} className="sendMessage">

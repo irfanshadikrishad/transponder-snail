@@ -59,6 +59,6 @@ export default function UserInfoModal({ profileModalSwitch }) {
         )}
       </section>
     </section>,
-    document.getElementById("user_info")
+    document.getElementById("user_info"),
   );
 }

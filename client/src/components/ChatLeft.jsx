@@ -44,11 +44,11 @@ export default function ChatLeft() {
                         ? `${String(chat.users[1].name).slice(0, 30)}...`
                         : String(chat.users[1].name)
                       : String(chat.users[0].name).length > 30
-                      ? `${String(chat.users[0].name).slice(0, 30)}...`
-                      : String(chat.users[0].name)
+                        ? `${String(chat.users[0].name).slice(0, 30)}...`
+                        : String(chat.users[0].name)
                     : String(chat.name).length > 30
-                    ? `${String(chat.name).slice(0, 30)}...`
-                    : String(chat.name)}
+                      ? `${String(chat.name).slice(0, 30)}...`
+                      : String(chat.name)}
                 </p>
                 {chat.latest && (
                   <p className="opponents_lastMessage">

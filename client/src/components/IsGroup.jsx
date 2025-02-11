@@ -75,7 +75,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       const response = await request.json();
       if (request.status === 200) {
@@ -185,7 +185,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
     };
 
     const formattedDate = `${ordinalSuffix(
-      day
+      day,
     )} ${month} ${year} ${hours}:${minutes} ${ampm}`;
     return formattedDate;
   }

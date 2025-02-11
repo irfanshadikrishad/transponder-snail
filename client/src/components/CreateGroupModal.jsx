@@ -33,7 +33,7 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
   };
   const removeFromGroup = async (toBeRemoved) => {
     let newGroupUsers = groupUsers.filter(
-      (existedUser) => existedUser._id !== toBeRemoved._id
+      (existedUser) => existedUser._id !== toBeRemoved._id,
     );
     setGroupUsers(newGroupUsers);
   };
@@ -48,7 +48,7 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       const response = await request.json();
       if (request.status === 200) {
@@ -163,6 +163,6 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
       </section>
       <ToastContainer />
     </section>,
-    document.getElementById("create_group")
+    document.getElementById("create_group"),
   );
 }
