@@ -15,7 +15,7 @@ const userSchema = Schema(
       type: Object,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 userSchema.methods.genJWT = function () {
@@ -25,7 +25,7 @@ userSchema.methods.genJWT = function () {
       email: this.email,
     },
     SECRET,
-    { expiresIn: "30d" }
+    { expiresIn: "30d" },
   );
 };
 
