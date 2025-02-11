@@ -38,9 +38,11 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
   useEffect(() => {
     getAllMessages();
     if (selectedChat) {
-      const newSocket = io(SOCKET_SERVER_URL);
+      const newSocket = io();
       newSocket.emit("setup", user);
-      newSocket.on("connect", () => {
+      newSocket.on("connect", (e) => {
+        console.log("onconnect", e);
+
         setIsSocketConnected(true);
       });
       setSocket(newSocket);
@@ -69,6 +71,8 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
   };
 
   const sendMessage = async (e) => {
+    console.log("send message triggered", isSocketConntected);
+
     e.preventDefault();
     socket.emit("stop_typing", selectedChat, user);
     if (content && isSocketConntected) {
@@ -81,6 +85,8 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
         body: JSON.stringify({ content, chatId: selectedChat._id }),
       });
       const response = await request.json();
+      console.log(response);
+
       if (request.status === 200) {
         setContent("");
         socket.emit("send_message", response);

@@ -34,8 +34,6 @@ export default function Login({
       body: JSON.stringify({ email: user.email, password: user.password }),
     });
     const response = await request.json();
-    console.log(response);
-
     if (request.status === 200) {
       storeTokenInLS(response.token);
       router.push("/chats");

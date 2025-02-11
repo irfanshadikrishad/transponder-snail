@@ -3,10 +3,12 @@ import { NextRequest } from "next/server";
 import Message from "@/models/message";
 import User from "@/models/user";
 import Chat from "@/models/chat";
+import { log } from "console";
 
 export const POST = withAuth(async (req: NextRequest, user: any) => {
   try {
     const { chatId, content } = await req.json();
+    log(chatId, content);
     if (!chatId || !content) {
       return new Response(JSON.stringify({ message: "Invalid request" }), {
         status: 400,
