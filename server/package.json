@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier . --write"
   },
   "author": "Irfan Shadik Rishad",
   "license": "ISC",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "chalk": "^5.4.1",
     "eslint": "^9.20.1",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.0"
   }
 }
