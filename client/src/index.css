@@ -340,15 +340,27 @@ input:-webkit-autofill:active {
 .navbar_right > h1 {
   color: var(--chat_notself);
 }
-
+.one_line {
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.c1 {
+  width: 40px;
+  border-radius: 50%;
+}
 .chat_tab {
   padding: 10px;
   background-color: var(--background);
   border-radius: 7px;
   cursor: pointer;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   line-height: 20px;
 }
 .opponents {
