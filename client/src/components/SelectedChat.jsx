@@ -58,7 +58,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
       const response = await request.json();
 
@@ -227,6 +227,9 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                                 : defaultAvatar
                             }
                             alt={`${name}'s avatar`}
+                            onError={(e) => {
+                              e.target.src = defaultAvatar;
+                            }}
                             draggable="false"
                           />
                         )
@@ -242,6 +245,9 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                                 : defaultAvatar
                             }
                             alt={`${name}'s avatar`}
+                            onError={(e) => {
+                              e.target.src = defaultAvatar;
+                            }}
                             draggable="false"
                           />
                         )}
@@ -271,7 +277,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                     ></p>
                   </div>
                 );
-              },
+              }
             )}
         </ScrollableFeed>
         <form onSubmit={sendMessage} className="sendMessage">

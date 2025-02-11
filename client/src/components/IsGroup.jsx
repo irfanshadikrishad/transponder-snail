@@ -75,7 +75,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
       const response = await request.json();
       if (request.status === 200) {
@@ -185,7 +185,7 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
     };
 
     const formattedDate = `${ordinalSuffix(
-      day,
+      day
     )} ${month} ${year} ${hours}:${minutes} ${ampm}`;
     return formattedDate;
   }
@@ -312,6 +312,9 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
                   draggable="false"
                   className="create_group_user_avatar"
                   src={search.avatar ? search.avatar.url : defaultAvatar}
+                  onError={(e) => {
+                    e.target.src = defaultAvatar;
+                  }}
                 />
                 <div className="create_group_user_text">
                   <p>{search.name}</p>

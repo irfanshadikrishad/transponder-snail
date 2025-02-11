@@ -35,6 +35,10 @@ export default function Navbar() {
         <img
           className="profile_avatar"
           src={user.avatar ? user.avatar.url : defaultAvatar}
+          alt={`${user.name} avatar`}
+          onError={(e) => {
+            e.target.src = defaultAvatar;
+          }}
         />
         <h1>{user.name}</h1>
       </div>

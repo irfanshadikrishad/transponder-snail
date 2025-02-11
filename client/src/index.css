@@ -184,6 +184,8 @@ input:-webkit-autofill:active {
   flex-direction: column;
   gap: 5px;
   margin-top: 10px;
+  max-height: 90.4vh;
+  overflow-y: scroll;
 }
 
 .drawer_chat {
@@ -574,6 +576,8 @@ input:-webkit-autofill:active {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  max-height: 450px;
+  overflow-y: scroll;
 }
 
 .create_group_user_avatar {

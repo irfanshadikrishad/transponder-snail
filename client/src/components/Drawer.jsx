@@ -53,7 +53,7 @@ export default function Drawer({ isdrawer }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
       const response = await request.json();
 
@@ -100,6 +100,9 @@ export default function Drawer({ isdrawer }) {
               <img
                 className="drawer_chat_avatar"
                 src={user.avatar ? user.avatar.url : defaultAvatar}
+                onError={(e) => {
+                  e.target.src = defaultAvatar;
+                }}
               />
               <p>{user.name}</p>
             </div>

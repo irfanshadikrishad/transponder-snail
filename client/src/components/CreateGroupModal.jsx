@@ -33,7 +33,7 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
   };
   const removeFromGroup = async (toBeRemoved) => {
     let newGroupUsers = groupUsers.filter(
-      (existedUser) => existedUser._id !== toBeRemoved._id,
+      (existedUser) => existedUser._id !== toBeRemoved._id
     );
     setGroupUsers(newGroupUsers);
   };
@@ -48,7 +48,7 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
       const response = await request.json();
       if (request.status === 200) {
@@ -135,6 +135,9 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
                     draggable="false"
                     className="create_group_user_avatar"
                     src={search.avatar ? search.avatar.url : defaultAvatar}
+                    onError={(e) => {
+                      e.target.src = defaultAvatar;
+                    }}
                   />
                   <div className="create_group_user_text">
                     <p>{search.name}</p>
@@ -163,6 +166,6 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
       </section>
       <ToastContainer />
     </section>,
-    document.getElementById("create_group"),
+    document.getElementById("create_group")
   );
 }
