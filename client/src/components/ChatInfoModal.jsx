@@ -53,6 +53,6 @@ export default function ChatInfoModal({ chatClose }) {
         )}
       </section>
     </section>,
-    document.getElementById("chat_info")
+    document.getElementById("chat_info"),
   );
 }

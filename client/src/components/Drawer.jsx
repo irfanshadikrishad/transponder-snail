@@ -53,7 +53,7 @@ export default function Drawer({ isdrawer }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       const response = await request.json();
 

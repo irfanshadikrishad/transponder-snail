@@ -47,7 +47,7 @@ export default function Register({ loginview }) {
       {
         method: "POST",
         body: cloud,
-      }
+      },
     );
     const avatarResponse = await avatarRequest.json();
 
