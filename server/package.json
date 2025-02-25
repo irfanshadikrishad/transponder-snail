@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "chalk": "^5.4.1",
-    "eslint": "^9.20.1",
+    "eslint": "^9.21.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.5.2"
   }
