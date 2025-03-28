@@ -17,7 +17,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.13.0",
+    "mongoose": "^8.13.1",
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
