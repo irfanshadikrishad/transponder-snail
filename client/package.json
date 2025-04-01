@@ -24,7 +24,7 @@
     "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.2.7",
+    "@eslint/compat": "^1.2.8",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.21.0",
     "@types/react": "^18.0.0",
