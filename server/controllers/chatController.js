@@ -9,7 +9,7 @@ const getSingleChat = async (req, res) => {
     return res.status(400);
   }
 
-  const isChat = await Chat.find({
+  let isChat = await Chat.find({
     isGroupChat: false,
     $and: [
       { users: { $elemMatch: { $eq: req.id } } },

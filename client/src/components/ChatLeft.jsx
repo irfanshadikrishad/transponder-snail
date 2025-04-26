@@ -30,7 +30,9 @@ export default function ChatLeft() {
       <div className="chat_all">
         {chats &&
           chats.map((chat) => {
-            console.log(chat);
+            // if (import.meta.env.DEBUG) {
+            //   console.log(chat);
+            // }
 
             return (
               <div
