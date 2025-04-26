@@ -5,16 +5,13 @@ import "react-toastify/dist/ReactToastify.css";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  let API = "https://transponder-snail.onrender.com";
+  let API = import.meta.env.VITE_API;
   const defaultAvatar = "/da.jpg";
   const [token, setToken] = useState(localStorage.getItem("logger"));
   const [user, setUser] = useState({});
   const [chats, setChats] = useState([]);
   const isLoggedIn = !!token;
   const [selectedChat, setSelectedChat] = useState({});
-
-  // Comment out before deploying
-  // API = "http://localhost:3001";
 
   const storeTokenInLS = (token) => {
     setToken(token);
