@@ -35,7 +35,7 @@ const getSingleChat = async (req, res) => {
       });
       const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
         "users",
-        "-password"
+        "-password",
       );
       res.status(200).json(FullChat);
     } catch (error) {
@@ -132,7 +132,7 @@ const addToGroup = async (req, res) => {
       {
         $push: { users: userId },
       },
-      { new: true }
+      { new: true },
     )
       .populate("users", { password: 0 })
       .populate("isAdmin", { password: 0 });
@@ -153,7 +153,7 @@ const removeFromGroup = async (req, res) => {
       {
         $pull: { users: userId },
       },
-      { new: true }
+      { new: true },
     )
       .populate("users", { password: 0 })
       .populate("isAdmin", { password: 0 });
