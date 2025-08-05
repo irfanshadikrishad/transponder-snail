@@ -21,7 +21,7 @@
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
-    "chalk": "^5.4.1",
+    "chalk": "^5.5.0",
     "eslint": "^9.23.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.5.3"
