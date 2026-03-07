@@ -1,163 +1,162 @@
-import { useState } from "react";
-import { useAuth } from "../store/user";
-import { createPortal } from "react-dom";
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useAuth } from '../store/user'
 // TOASTIFY
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 // ICONS
-import { RxCross2 } from "react-icons/rx";
+import { RxCross2 } from 'react-icons/rx'
 
 export default function CreateGroupModal({ setIsGroupModalActive }) {
-  const { API, defaultAvatar, token, getAllChats, errorToast, user } =
-    useAuth();
-  const [searchResults, setSearchResults] = useState([]);
-  const [groupUsers, setGroupUsers] = useState([]);
-  const [groupName, setGroupName] = useState("");
+  const { API, defaultAvatar, token, getAllChats, errorToast, user } = useAuth()
+  const [searchResults, setSearchResults] = useState([])
+  const [groupUsers, setGroupUsers] = useState([])
+  const [groupName, setGroupName] = useState('')
 
   function isDuplicate(arr, newObj) {
     for (let obj of arr) {
       if (obj._id === newObj._id) {
-        return true;
+        return true
       }
     }
-    return false;
+    return false
   }
 
   const addToGroup = async (toBeAddedObject) => {
     if (!isDuplicate(groupUsers, toBeAddedObject)) {
-      setGroupUsers([...groupUsers, toBeAddedObject]);
+      setGroupUsers([...groupUsers, toBeAddedObject])
     }
     // else {
     //   console.log(`duplicate detected ${toBeAddedObject.name}`);
     // }
-  };
+  }
   const removeFromGroup = async (toBeRemoved) => {
     let newGroupUsers = groupUsers.filter(
-      (existedUser) => existedUser._id !== toBeRemoved._id,
-    );
-    setGroupUsers(newGroupUsers);
-  };
+      (existedUser) => existedUser._id !== toBeRemoved._id
+    )
+    setGroupUsers(newGroupUsers)
+  }
 
   const handleCreateSearch = async (e) => {
-    if (e.target.value !== "") {
+    if (e.target.value !== '') {
       const request = await fetch(
         `${API}/api/users/?search=${e.target.value}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
-        },
-      );
-      const response = await request.json();
+        }
+      )
+      const response = await request.json()
       if (request.status === 200) {
-        setSearchResults(response);
+        setSearchResults(response)
       }
     } else {
-      setSearchResults([]);
+      setSearchResults([])
     }
-  };
+  }
 
   const createGroupChat = async () => {
-    const users = groupUsers.map((gusers) => gusers._id);
-    const users_names = groupUsers.map((gusers) => gusers.name).join(", ");
+    const users = groupUsers.map((gusers) => gusers._id)
+    const users_names = groupUsers.map((gusers) => gusers.name).join(', ')
     if (users) {
       const request = await fetch(`${API}/api/chat/createGroup`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           users: users,
-          name: groupName === "" ? users_names : groupName,
+          name: groupName === '' ? users_names : groupName,
         }),
-      });
-      const { message } = await request.json();
+      })
+      const { message } = await request.json()
       if (request.status === 201) {
-        setIsGroupModalActive(false);
-        setGroupName("");
-        setGroupUsers([]);
-        setSearchResults([]);
-        getAllChats();
+        setIsGroupModalActive(false)
+        setGroupName('')
+        setGroupUsers([])
+        setSearchResults([])
+        getAllChats()
       } else {
-        errorToast(message);
+        errorToast(message)
       }
     }
-  };
+  }
 
   return createPortal(
-    <section className="create_group_modal">
-      <section className="create_group_inside">
+    <section className='create_group_modal'>
+      <section className='create_group_inside'>
         <input
           onChange={(e) => {
-            setGroupName(e.target.value);
+            setGroupName(e.target.value)
           }}
-          name="groupName"
-          type="text"
-          placeholder="Group Name..."
+          name='groupName'
+          type='text'
+          placeholder='Group Name...'
         />
-        <div className="added_users">
+        <div className='added_users'>
           {groupUsers &&
             groupUsers.map((group, i) => {
               return (
-                <div key={i} className="addedUser">
-                  {group.name}{" "}
+                <div key={i} className='addedUser'>
+                  {group.name}{' '}
                   <button
                     onClick={() => {
-                      removeFromGroup(group);
+                      removeFromGroup(group)
                     }}
                   >
                     {<RxCross2 />}
                   </button>
                 </div>
-              );
+              )
             })}
         </div>
         <input
           onChange={handleCreateSearch}
-          type="search"
-          placeholder="Search..."
+          type='search'
+          placeholder='Search...'
         />
-        <div className="create_group_searched">
+        <div className='create_group_searched'>
           {searchResults &&
             searchResults.map((search, i) => {
               return (
                 <div
                   onClick={() => {
-                    addToGroup(search);
+                    addToGroup(search)
                   }}
                   key={i}
-                  className="create_group_user_search"
+                  className='create_group_user_search'
                 >
                   <img
-                    draggable="false"
-                    className="create_group_user_avatar"
+                    draggable='false'
+                    className='create_group_user_avatar'
                     src={search.avatar ? search.avatar.url : defaultAvatar}
                     onError={(e) => {
-                      e.target.src = defaultAvatar;
+                      e.target.src = defaultAvatar
                     }}
                   />
-                  <div className="create_group_user_text">
+                  <div className='create_group_user_text'>
                     <p>{search.name}</p>
                     <p>{search.email}</p>
                   </div>
                 </div>
-              );
+              )
             })}
         </div>
-        <div className="create_group_buttons">
+        <div className='create_group_buttons'>
           <button
             onClick={() => {
-              setIsGroupModalActive(false);
+              setIsGroupModalActive(false)
             }}
           >
             Close
           </button>
           <button
             onClick={() => {
-              createGroupChat();
+              createGroupChat()
             }}
           >
             Create
@@ -166,6 +165,6 @@ export default function CreateGroupModal({ setIsGroupModalActive }) {
       </section>
       <ToastContainer />
     </section>,
-    document.getElementById("create_group"),
-  );
+    document.getElementById('create_group')
+  )
 }

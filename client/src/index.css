@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
 
 :root {
   --color: #252525;
@@ -18,7 +18,7 @@
 body {
   color: var(--color);
   background-color: var(--background);
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 a {
@@ -97,7 +97,7 @@ input:-webkit-autofill:active {
   cursor: pointer;
 }
 
-.form_password > input[type="password"] {
+.form_password > input[type='password'] {
   width: 100%;
 }
 

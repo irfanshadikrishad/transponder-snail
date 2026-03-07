@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../store/user";
+import { useState } from 'react'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { useAuth } from '../store/user'
 // ICONS
-import { RxCross2 } from "react-icons/rx";
-import { MdGroupAdd, MdReportProblem, MdInfoOutline } from "react-icons/md";
-import { FiEdit3, FiCheck } from "react-icons/fi";
-import { RiChatDeleteFill } from "react-icons/ri";
-import { FaPersonRunning } from "react-icons/fa6";
+import { FaPersonRunning } from 'react-icons/fa6'
+import { FiCheck, FiEdit3 } from 'react-icons/fi'
+import { MdGroupAdd, MdInfoOutline, MdReportProblem } from 'react-icons/md'
+import { RiChatDeleteFill } from 'react-icons/ri'
+import { RxCross2 } from 'react-icons/rx'
 
 export default function isGroup({ selectedChat, isAdmin, chatClose }) {
   const {
@@ -19,200 +19,200 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
     getAllChats,
     setSelectedChat,
     user,
-  } = useAuth();
-  const { name, users } = selectedChat;
-  const [modifiedUsers, setModifiedUsers] = useState(users);
-  const [searchResults, setSearchResults] = useState([]);
-  const [addMemberClicked, setAddMemberClicked] = useState(false);
-  const [isEditNameOn, setIsEditNameOn] = useState(false);
-  const [newChatName, setNewChatName] = useState("");
+  } = useAuth()
+  const { name, users } = selectedChat
+  const [modifiedUsers, setModifiedUsers] = useState(users)
+  const [searchResults, setSearchResults] = useState([])
+  const [addMemberClicked, setAddMemberClicked] = useState(false)
+  const [isEditNameOn, setIsEditNameOn] = useState(false)
+  const [newChatName, setNewChatName] = useState('')
 
   const deleteGroupMember = async (toBeDeletedId, toBeDeletedName) => {
     const request = await fetch(`${API}/api/chat/removeFromGroup`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({ chatId: selectedChat._id, userId: toBeDeletedId }),
-    });
-    const response = await request.json();
+    })
+    const response = await request.json()
     if (request.status === 200) {
-      setModifiedUsers(response.users);
-      successToast(`${toBeDeletedName} has been kicked out.`);
+      setModifiedUsers(response.users)
+      successToast(`${toBeDeletedName} has been kicked out.`)
     } else {
-      errorToast(response.error);
+      errorToast(response.error)
     }
-  };
+  }
 
   const leaveGroup = async (user_id) => {
     const request = await fetch(`${API}/api/chat/removeFromGroup`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({ chatId: selectedChat._id, userId: user_id }),
-    });
-    const response = await request.json();
+    })
+    const response = await request.json()
 
     if (request.status === 200) {
-      chatClose();
-      setSelectedChat({});
-      getAllChats();
+      chatClose()
+      setSelectedChat({})
+      getAllChats()
     } else {
-      errorToast(response.error);
+      errorToast(response.error)
     }
-  };
+  }
 
   const handleSearchUser = async (e) => {
-    if (e.target.value !== "") {
+    if (e.target.value !== '') {
       const request = await fetch(
         `${API}/api/users/?search=${e.target.value}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
-        },
-      );
-      const response = await request.json();
+        }
+      )
+      const response = await request.json()
       if (request.status === 200) {
-        setSearchResults(response);
+        setSearchResults(response)
       }
     } else {
-      setSearchResults([]);
+      setSearchResults([])
     }
-  };
+  }
 
   function doesUserExist(userId) {
-    let exist = false;
+    let exist = false
     modifiedUsers.map((user) => {
       if (user._id === userId) {
-        console.log(user._id, userId);
-        exist = true;
+        console.log(user._id, userId)
+        exist = true
       }
-    });
-    return exist;
+    })
+    return exist
   }
 
   const renameGroup = async () => {
     const request = await fetch(`${API}/api/chat/renameGroup`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({ chatId: selectedChat._id, chatName: newChatName }),
-    });
+    })
 
-    const { error } = await request.json();
+    const { error } = await request.json()
     if (request.status === 200) {
-      successToast(`name updated successfully`);
-      setIsEditNameOn(false);
-      chatClose();
-      setSelectedChat({});
-      getAllChats();
+      successToast(`name updated successfully`)
+      setIsEditNameOn(false)
+      chatClose()
+      setSelectedChat({})
+      getAllChats()
     } else {
-      errorToast(error);
+      errorToast(error)
     }
-  };
+  }
 
   const addToGroup = async (toBeAddedMember_Id, toBeAddedMember_Object) => {
     if (!doesUserExist(toBeAddedMember_Id)) {
       const request = await fetch(`${API}/api/chat/addToGroup`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           userId: toBeAddedMember_Id,
           chatId: selectedChat._id,
         }),
-      });
-      const response = await request.json();
+      })
+      const response = await request.json()
       if (request.status === 200) {
-        successToast(`${toBeAddedMember_Object.name} added to the group.`);
-        setModifiedUsers([...modifiedUsers, toBeAddedMember_Object]);
+        successToast(`${toBeAddedMember_Object.name} added to the group.`)
+        setModifiedUsers([...modifiedUsers, toBeAddedMember_Object])
       } else {
-        errorToast(response.error);
+        errorToast(response.error)
       }
     } else {
-      errorToast(`${toBeAddedMember_Object.name} already exist in the group.`);
+      errorToast(`${toBeAddedMember_Object.name} already exist in the group.`)
     }
-  };
+  }
 
   const deleteGroup = async (chatId) => {
     const request = await fetch(`${API}/api/chat/delete_group`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({ chatId }),
-    });
+    })
 
-    const response = await request.json();
+    const response = await request.json()
 
     if (request.status === 200) {
-      successToast(`deleted ${name}`);
-      chatClose();
-      setSelectedChat({});
-      getAllChats();
+      successToast(`deleted ${name}`)
+      chatClose()
+      setSelectedChat({})
+      getAllChats()
     } else {
-      errorToast(response.error);
+      errorToast(response.error)
     }
-  };
+  }
 
   function convertTimestamp(timestamp) {
-    const date = new Date(timestamp);
+    const date = new Date(timestamp)
 
-    const day = date.getUTCDate();
-    const month = date.toLocaleString("default", { month: "long" });
-    const year = date.getUTCFullYear();
-    let hours = date.getUTCHours();
-    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+    const day = date.getUTCDate()
+    const month = date.toLocaleString('default', { month: 'long' })
+    const year = date.getUTCFullYear()
+    let hours = date.getUTCHours()
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0')
 
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12; // Convert to 12-hour format
+    const ampm = hours >= 12 ? 'PM' : 'AM'
+    hours = hours % 12 || 12 // Convert to 12-hour format
 
     const ordinalSuffix = (n) => {
-      const s = ["th", "st", "nd", "rd"];
-      const v = n % 100;
-      return n + (s[(v - 20) % 10] || s[v] || s[0]);
-    };
+      const s = ['th', 'st', 'nd', 'rd']
+      const v = n % 100
+      return n + (s[(v - 20) % 10] || s[v] || s[0])
+    }
 
     const formattedDate = `${ordinalSuffix(
-      day,
-    )} ${month} ${year} ${hours}:${minutes} ${ampm}`;
-    return formattedDate;
+      day
+    )} ${month} ${year} ${hours}:${minutes} ${ampm}`
+    return formattedDate
   }
 
   return (
-    <section className="selectedGroup info_wrapper">
-      <section className="selectedGroupName">
+    <section className='selectedGroup info_wrapper'>
+      <section className='selectedGroupName'>
         {isEditNameOn && isAdmin ? (
           <input
-            type="text"
+            type='text'
             placeholder={name}
             value={newChatName}
             onChange={(e) => {
-              setNewChatName(e.target.value);
+              setNewChatName(e.target.value)
             }}
           />
         ) : (
           <h1>{name}</h1>
         )}
-        <div className="group_rename">
+        <div className='group_rename'>
           {isAdmin && isEditNameOn && (
             <button onClick={renameGroup}>{<FiCheck />}</button>
           )}
           {isAdmin && (
             <button
               onClick={() => {
-                setIsEditNameOn(!isEditNameOn);
+                setIsEditNameOn(!isEditNameOn)
               }}
             >
               {<FiEdit3 />}
@@ -220,18 +220,18 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
           )}
         </div>
       </section>
-      <p className="createdAt">
+      <p className='createdAt'>
         <MdInfoOutline /> created at: {convertTimestamp(selectedChat.createdAt)}
       </p>
-      <section className="groupDivider">
+      <section className='groupDivider'>
         <div>
-          <p className="group_header">Members:</p>
-          <div className="group_members">
+          <p className='group_header'>Members:</p>
+          <div className='group_members'>
             {isAdmin && (
               <div
-                className="groupAddMember"
+                className='groupAddMember'
                 onClick={() => {
-                  setAddMemberClicked(!addMemberClicked);
+                  setAddMemberClicked(!addMemberClicked)
                 }}
               >
                 {<MdGroupAdd />} Add Members
@@ -240,14 +240,14 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
             {modifiedUsers &&
               modifiedUsers.map(({ _id, avatar, name }, index) => {
                 return (
-                  <div key={index} className="group_member">
-                    <div className="groupMember_P1">
+                  <div key={index} className='group_member'>
+                    <div className='groupMember_P1'>
                       <img
                         src={avatar ? avatar.url : defaultAvatar}
-                        className="group_memberAvatar"
-                        draggable="false"
+                        className='group_memberAvatar'
+                        draggable='false'
                         onError={(e) => {
-                          e.target.src = defaultAvatar;
+                          e.target.src = defaultAvatar
                         }}
                       />
                       <p>{name}</p>
@@ -255,34 +255,34 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
                     {user._id !== _id && isAdmin && (
                       <button
                         onClick={() => {
-                          deleteGroupMember(_id, name);
+                          deleteGroupMember(_id, name)
                         }}
                       >
                         {<RxCross2 />}
                       </button>
                     )}
                   </div>
-                );
+                )
               })}
           </div>
         </div>
-        <div className="groupDivider_right">
+        <div className='groupDivider_right'>
           <button
-            className="leave_group"
+            className='leave_group'
             onClick={() => {
-              leaveGroup(user._id);
+              leaveGroup(user._id)
             }}
           >
             <FaPersonRunning /> leave group
           </button>
-          <button className="leave_group">
+          <button className='leave_group'>
             <MdReportProblem /> report group
           </button>
           {isAdmin && (
             <button
-              className="delete_group"
+              className='delete_group'
               onClick={() => {
-                deleteGroup(selectedChat._id);
+                deleteGroup(selectedChat._id)
               }}
             >
               <RiChatDeleteFill /> delete group
@@ -293,38 +293,38 @@ export default function isGroup({ selectedChat, isAdmin, chatClose }) {
       {isAdmin && addMemberClicked && (
         <input
           onChange={handleSearchUser}
-          name="add"
-          placeholder="add user..."
+          name='add'
+          placeholder='add user...'
         />
       )}
-      <div className="create_group_searched">
+      <div className='create_group_searched'>
         {addMemberClicked &&
           searchResults.map((search) => {
             return (
               <div
                 key={search._id}
                 onClick={() => {
-                  addToGroup(search._id, search);
+                  addToGroup(search._id, search)
                 }}
-                className="create_group_user_search"
+                className='create_group_user_search'
               >
                 <img
-                  draggable="false"
-                  className="create_group_user_avatar"
+                  draggable='false'
+                  className='create_group_user_avatar'
                   src={search.avatar ? search.avatar.url : defaultAvatar}
                   onError={(e) => {
-                    e.target.src = defaultAvatar;
+                    e.target.src = defaultAvatar
                   }}
                 />
-                <div className="create_group_user_text">
+                <div className='create_group_user_text'>
                   <p>{search.name}</p>
                   <p>{search.email}</p>
                 </div>
               </div>
-            );
+            )
           })}
       </div>
       <ToastContainer />
     </section>
-  );
+  )
 }

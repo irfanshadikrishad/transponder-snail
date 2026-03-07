@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: transponder-backend
-    env: node
-    plan: free
-    rootDir: server
-    buildCommand: npm install
-    startCommand: npm run start
-    autoDeploy: true
