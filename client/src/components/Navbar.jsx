@@ -1,23 +1,23 @@
-import { useState } from "react";
-import { useAuth } from "../store/user";
+import { useState } from 'react'
+import { useAuth } from '../store/user'
 // COMPONENTS
-import Drawer from "./Drawer";
+import Drawer from './Drawer'
 // ICONS
-import { FiSearch } from "react-icons/fi";
-import UserInfoModal from "./UserInfoModal";
+import { FiSearch } from 'react-icons/fi'
+import UserInfoModal from './UserInfoModal'
 
 export default function Navbar() {
-  const { user, defaultAvatar } = useAuth();
-  const [isMenu, setIsMenu] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [profileModal, setProfileModal] = useState(false);
+  const { user, defaultAvatar } = useAuth()
+  const [isMenu, setIsMenu] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [profileModal, setProfileModal] = useState(false)
 
   return (
     <nav>
-      <div className="search_container">
+      <div className='search_container'>
         <button
           onClick={() => {
-            setIsDrawerOpen(true);
+            setIsDrawerOpen(true)
           }}
         >
           {<FiSearch />}
@@ -28,20 +28,20 @@ export default function Navbar() {
       {profileModal && <UserInfoModal profileModalSwitch={setProfileModal} />}
       <div
         onClick={() => {
-          setProfileModal(true);
+          setProfileModal(true)
         }}
-        className="navbar_right"
+        className='navbar_right'
       >
         <img
-          className="profile_avatar"
+          className='profile_avatar'
           src={user.avatar ? user.avatar.url : defaultAvatar}
           alt={`${user.name} avatar`}
           onError={(e) => {
-            e.target.src = defaultAvatar;
+            e.target.src = defaultAvatar
           }}
         />
         <h1>{user.name}</h1>
       </div>
     </nav>
-  );
+  )
 }

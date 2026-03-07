@@ -1,19 +1,19 @@
-import { useAuth } from "../store/user";
-import { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
-import ScrollableFeed from "react-scrollable-feed";
-import io from "socket.io-client";
-import { Helmet } from "react-helmet";
+import { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
+import ScrollableFeed from 'react-scrollable-feed'
+import { ToastContainer } from 'react-toastify'
+import io from 'socket.io-client'
+import { useAuth } from '../store/user'
 // TOOLTIP
-import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
 // ICONS
-import { IoInformationCircle } from "react-icons/io5";
-import { TbArrowBackUp } from "react-icons/tb";
-import { FiSend } from "react-icons/fi";
-import { IoMdCall, IoIosVideocam } from "react-icons/io";
+import { FiSend } from 'react-icons/fi'
+import { IoIosVideocam, IoMdCall } from 'react-icons/io'
+import { IoInformationCircle } from 'react-icons/io5'
+import { TbArrowBackUp } from 'react-icons/tb'
 // UTILS
-import { linkify } from "../utils/linkify";
+import { linkify } from '../utils/linkify'
 
 export default function SelectedChat({ setIsChatInfoOpen }) {
   const {
@@ -25,123 +25,122 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
     selectedChat,
     setSelectedChat,
     getAllChats,
-  } = useAuth();
-  const [content, setContent] = useState("");
-  const [allMessages, setAllMessages] = useState([]);
-  const [isSocketConntected, setIsSocketConnected] = useState(false);
-  const [socket, setSocket] = useState(null); // Initialize socket state
-  const [selectedChatToBeCompared, setSelectedChatToBeCompared] =
-    useState(null);
-  const [typing, setTyping] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+  } = useAuth()
+  const [content, setContent] = useState('')
+  const [allMessages, setAllMessages] = useState([])
+  const [isSocketConntected, setIsSocketConnected] = useState(false)
+  const [socket, setSocket] = useState(null) // Initialize socket state
+  const [selectedChatToBeCompared, setSelectedChatToBeCompared] = useState(null)
+  const [typing, setTyping] = useState(false)
+  const [isTyping, setIsTyping] = useState(false)
 
   useEffect(() => {
-    getAllMessages();
+    getAllMessages()
     if (selectedChat) {
-      const newSocket = io(API);
-      newSocket.emit("setup", user);
-      newSocket.on("connect", () => {
-        setIsSocketConnected(true);
-      });
-      setSocket(newSocket);
-      setSelectedChatToBeCompared(selectedChat);
+      const newSocket = io(API)
+      newSocket.emit('setup', user)
+      newSocket.on('connect', () => {
+        setIsSocketConnected(true)
+      })
+      setSocket(newSocket)
+      setSelectedChatToBeCompared(selectedChat)
     }
-  }, [selectedChat, API, user]);
+  }, [selectedChat, API, user])
 
   const getAllMessages = async () => {
     if (selectedChat._id) {
       const request = await fetch(
         `${API}/api/message/single/${selectedChat._id}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
-        },
-      );
-      const response = await request.json();
+        }
+      )
+      const response = await request.json()
 
       if (request.status === 200) {
-        setAllMessages(response);
+        setAllMessages(response)
       } else {
-        setAllMessages([]);
+        setAllMessages([])
       }
     }
-  };
+  }
 
   const sendMessage = async (e) => {
-    e.preventDefault();
-    socket.emit("stop_typing", selectedChat, user);
+    e.preventDefault()
+    socket.emit('stop_typing', selectedChat, user)
     if (content && isSocketConntected) {
       const request = await fetch(`${API}/api/message/send`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ content, chatId: selectedChat._id }),
-      });
-      const response = await request.json();
+      })
+      const response = await request.json()
       if (request.status === 200) {
-        setContent("");
-        socket.emit("send_message", response);
-        setAllMessages([...allMessages, response]);
-        getAllChats();
+        setContent('')
+        socket.emit('send_message', response)
+        setAllMessages([...allMessages, response])
+        getAllChats()
       } else {
-        console.log(response);
-        errorToast(response.error);
+        console.log(response)
+        errorToast(response.error)
       }
     }
-  };
+  }
 
   const typingHandler = (e) => {
-    setContent(e.target.value);
+    setContent(e.target.value)
 
-    if (!isSocketConntected) return;
+    if (!isSocketConntected) return
 
     if (!typing) {
-      setTyping(true);
-      socket.emit("typing", selectedChat, user);
+      setTyping(true)
+      socket.emit('typing', selectedChat, user)
     }
-    let lastTypingTime = new Date().getTime();
-    var timerLength = 3000;
+    let lastTypingTime = new Date().getTime()
+    var timerLength = 3000
     setTimeout(() => {
-      var timeNow = new Date().getTime();
-      var timeDiff = timeNow - lastTypingTime;
+      var timeNow = new Date().getTime()
+      var timeDiff = timeNow - lastTypingTime
       if (timeDiff >= timerLength && typing) {
-        socket.emit("stop_typing", selectedChat, user);
-        setTyping(false);
+        socket.emit('stop_typing', selectedChat, user)
+        setTyping(false)
       }
-    }, timerLength);
-  };
+    }, timerLength)
+  }
 
   useEffect(() => {
     if (socket) {
-      socket.on("typing", (sendTo) => {
-        console.log("typing", sendTo.name);
-        setIsTyping(sendTo);
-      });
-      socket.on("stop_typing", (sendTo) => {
-        setIsTyping(false);
-        console.log("stop_typing", sendTo.name);
-      });
-      socket.on("message_recived", (message) => {
+      socket.on('typing', (sendTo) => {
+        console.log('typing', sendTo.name)
+        setIsTyping(sendTo)
+      })
+      socket.on('stop_typing', (sendTo) => {
+        setIsTyping(false)
+        console.log('stop_typing', sendTo.name)
+      })
+      socket.on('message_recived', (message) => {
         if (
           !selectedChatToBeCompared ||
           selectedChatToBeCompared._id !== message.chat._id
         ) {
           // console.log("notification", message);
         } else {
-          getAllMessages();
-          getAllChats();
+          getAllMessages()
+          getAllChats()
         }
-      });
+      })
     }
     // else {
     //   console.log("Socket is not connected", socket);
     // }
-  });
+  })
 
   return (
     <div>
@@ -154,12 +153,12 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
               : `${selectedChat.users[0].name} / transponder-snail`}
         </title>
       </Helmet>
-      <section className="chat__header">
+      <section className='chat__header'>
         {selectedChat && (
-          <div className="chat_header_left">
+          <div className='chat_header_left'>
             <button
               onClick={() => {
-                setSelectedChat({});
+                setSelectedChat({})
               }}
             >
               {<TbArrowBackUp />}
@@ -181,46 +180,46 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
             </p>
           </div>
         )}
-        <section className="selectedChat_buns">
-          <button disabled className="chat__info">
+        <section className='selectedChat_buns'>
+          <button disabled className='chat__info'>
             <IoMdCall />
           </button>
-          <button disabled className="chat__info">
+          <button disabled className='chat__info'>
             <IoIosVideocam />
           </button>
           <button
             onClick={() => {
-              setIsChatInfoOpen(true);
+              setIsChatInfoOpen(true)
             }}
-            className="chat__info"
+            className='chat__info'
           >
             {<IoInformationCircle />}
           </button>
         </section>
       </section>
-      <section className="chat_textarea">
+      <section className='chat_textarea'>
         <ScrollableFeed>
           {allMessages &&
             allMessages.map(
               ({ sender, content, name, chat, createdAt }, index) => {
                 const previousMessageSender =
-                  index > 0 ? allMessages[index - 1] : null;
+                  index > 0 ? allMessages[index - 1] : null
 
                 return (
                   <div
                     key={index}
                     className={
-                      sender._id === user._id ? "chat_i sent" : "chat_i"
+                      sender._id === user._id ? 'chat_i sent' : 'chat_i'
                     }
                   >
                     {/* if its logged in users message don't show the avatar */}
                     {sender._id !== user._id && previousMessageSender
                       ? previousMessageSender.sender.email !== sender.email && (
                           <img
-                            data-tooltip-id={selectedChat.isGroup && "tooltip"}
+                            data-tooltip-id={selectedChat.isGroup && 'tooltip'}
                             data-tooltip-content={sender.name}
-                            data-tooltip-place="top-start"
-                            className="chat_avatar"
+                            data-tooltip-place='top-start'
+                            className='chat_avatar'
                             src={
                               sender.avatar.url
                                 ? sender.avatar.url
@@ -228,17 +227,17 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                             }
                             alt={`${name}'s avatar`}
                             onError={(e) => {
-                              e.target.src = defaultAvatar;
+                              e.target.src = defaultAvatar
                             }}
-                            draggable="false"
+                            draggable='false'
                           />
                         )
                       : sender._id !== user._id && (
                           <img
-                            data-tooltip-id={selectedChat.isGroup && "tooltip"}
+                            data-tooltip-id={selectedChat.isGroup && 'tooltip'}
                             data-tooltip-content={sender.name}
-                            data-tooltip-place="top-start"
-                            className="chat_avatar"
+                            data-tooltip-place='top-start'
+                            className='chat_avatar'
                             src={
                               sender.avatar.url
                                 ? sender.avatar.url
@@ -246,15 +245,15 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                             }
                             alt={`${name}'s avatar`}
                             onError={(e) => {
-                              e.target.src = defaultAvatar;
+                              e.target.src = defaultAvatar
                             }}
-                            draggable="false"
+                            draggable='false'
                           />
                         )}
                     <p
-                      data-tooltip-id="time"
+                      data-tooltip-id='time'
                       data-tooltip-content={String(createdAt).slice(0, 10)}
-                      data-tooltip-place="right"
+                      data-tooltip-place='right'
                       className={
                         // sender._id === user._id
                         //   ? "chat_back chat_self"
@@ -268,7 +267,7 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                               previousMessageSender &&
                               previousMessageSender.sender.email ===
                                 sender.email &&
-                              "noImageSender"
+                              'noImageSender'
                             }`
                       }
                       dangerouslySetInnerHTML={{
@@ -276,27 +275,27 @@ export default function SelectedChat({ setIsChatInfoOpen }) {
                       }}
                     ></p>
                   </div>
-                );
-              },
+                )
+              }
             )}
         </ScrollableFeed>
-        <form onSubmit={sendMessage} className="sendMessage">
-          {isTyping && <p className="typing">{isTyping.name} is typing...</p>}
+        <form onSubmit={sendMessage} className='sendMessage'>
+          {isTyping && <p className='typing'>{isTyping.name} is typing...</p>}
           <input
             value={content}
             onChange={typingHandler}
-            id="send_message"
-            placeholder="send message..."
-            autoComplete="off"
+            id='send_message'
+            placeholder='send message...'
+            autoComplete='off'
           />
-          <button type="submit" className="sendMessage_button">
+          <button type='submit' className='sendMessage_button'>
             {<FiSend />}
           </button>
         </form>
       </section>
       <ToastContainer />
-      <Tooltip id="tooltip" />
-      <Tooltip id="time" />
+      <Tooltip id='tooltip' />
+      <Tooltip id='time' />
     </div>
-  );
+  )
 }
