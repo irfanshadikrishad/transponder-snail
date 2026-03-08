@@ -37,7 +37,7 @@ export default function Login({ loginview }) {
 
   return (
     <form onSubmit={login} className='home_login'>
-      <h1>Login</h1>
+      <h1>Welcome back</h1>
       <input
         name='email'
         value={user.email}

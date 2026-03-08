@@ -2,8 +2,6 @@ import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../store/user'
 // ICONS
-import { FaLanguage } from 'react-icons/fa'
-import { IoNotifications } from 'react-icons/io5'
 import { PiUserCircleGearBold } from 'react-icons/pi'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { TbHelpHexagonFilled } from 'react-icons/tb'
@@ -36,12 +34,6 @@ export default function UserInfoModal({ profileModalSwitch }) {
             <p>{user.email}</p>
 
             <section className='profile_btns'>
-              <button disabled className='profile_btn'>
-                <IoNotifications /> Notifications
-              </button>
-              <button disabled className='profile_btn'>
-                <FaLanguage /> App Language
-              </button>
               <button disabled className='profile_btn'>
                 <TbHelpHexagonFilled /> Help
               </button>
