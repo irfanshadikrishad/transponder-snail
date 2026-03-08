@@ -80,13 +80,11 @@ export default function Register({ loginview }) {
         }}
         className='register_avatar'
       >
-        {
-          <img
-            src={avatar ? URL.createObjectURL(avatar) : defaultAvatar}
-            alt='defaultAvatar'
-            className='register_defaultAvatar'
-          />
-        }
+        <img
+          src={avatar ? URL.createObjectURL(avatar) : defaultAvatar}
+          alt='defaultAvatar'
+          className='register_defaultAvatar'
+        />
         <input
           ref={avatarRef}
           type='file'

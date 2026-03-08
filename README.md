@@ -1,4 +1,4 @@
-<h3>transponder-snail</h3>
+<h3>Transponder Snail</h3>
 
 Open Source MERN Stack chat app. The name transponder-snail is inspired by 'One Piece' communication device transponder snail AKA den-den-mushi.
 
@@ -20,37 +20,37 @@ Open Source MERN Stack chat app. The name transponder-snail is inspired by 'One 
 
 To run locally in your own device first clone the repository:
 
-```ada
+```bash
 git clone https://github.com/irfanshadikrishad/transponder-snail.git
 ```
 
 Change the directory:
 
-```ada
+```bash
 cd transponder-snail
 ```
 
 there are two main directories for server and client, you will need to install the packages in each directory.
 
-```ada
+```bash
 cd client
 ```
 
-```ada
+```bash
 npm install
 ```
 
-```ada
+```bash
 cd ../server
 ```
 
-```ada
+```bash
 npm install
 ```
 
 To run front-end in react:
 
-```ada
+```bash
 npm run dev
 ```
 
@@ -58,13 +58,13 @@ then go to [localhost](http://localhost:5173) where its running.
 
 To run server go to server directory and run:
 
-```ada
+```bash
 node server.js
 ```
 
 or
 
-```ada
+```bash
 nodemon server.js
 ```
 
@@ -88,8 +88,12 @@ SECRET=
 - Socket.io for Real-time chat
 
 <h4>How to contribute?</h4>
-For contribution, please follow this <a href='https://docs.google.com/document/d/1bCX9bvNzWE1ObDnmUYCMF5H3CCWGgBiQbV_C0IhRLrc'>guide/instructions</a>. Any contribution to improve this project is appreciated.
+For contribution, please follow this <a target='_blank' href='https://gist.github.com/irfanshadikrishad/fdf98897eff3422f08a3799839f6eda4'>guide/instructions</a>. Any contribution to improve this project is appreciated.
 
 <br/>
 <br/>
+
+> [!NOTE]
+> Crafted without AI assistance. (ง'̀-'́)ง
+
 Thank You for visiting. (▀̿Ĺ̯▀̿ ̿)
