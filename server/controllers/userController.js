@@ -22,4 +22,13 @@ const allUsers = async (req, res) => {
   }
 };
 
-export { allUsers };
+const userCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    console.log(chalk.magenta(`[userCount] ${error.message}`));
+  }
+};
+
+export { allUsers, userCount };

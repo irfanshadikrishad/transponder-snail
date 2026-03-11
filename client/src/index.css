@@ -986,3 +986,71 @@ input:-webkit-autofill:active {
     grid-template-columns: 1fr;
   }
 }
+
+/* Stats.css */
+
+.stats-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: #f8fafc;
+}
+
+.stats-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 320px;
+  transition: transform 0.2s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+}
+
+.icon-wrapper {
+  background: #eef2ff;
+  color: #4f46e5; /* Indigo accent */
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.stats-title {
+  color: #64748b; /* Muted slate blue */
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.stats-count {
+  color: #1e293b; /* Dark slate */
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.stats-trend {
+  font-size: 0.875rem;
+  color: #10b981; /* Emerald Green */
+  font-weight: 500;
+  margin: 0;
+}
