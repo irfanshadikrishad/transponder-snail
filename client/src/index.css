@@ -480,7 +480,7 @@ input:-webkit-autofill:active {
   border-radius: 50%;
 }
 
-.chat:last-child() {
+.chat:last-child {
   position: relative;
 }
 
